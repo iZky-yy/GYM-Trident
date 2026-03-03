@@ -12,7 +12,8 @@ class PaketGymController extends Controller
      */
     public function index()
     {
-        //
+        $PaketGym = PaketGym::all();
+        return view('admin.paketgym.index', compact('PaketGym'));
     }
 
     /**
@@ -20,7 +21,7 @@ class PaketGymController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.paketgym.insert');
     }
 
     /**
@@ -28,13 +29,21 @@ class PaketGymController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+                'idpaketgym' => 'required',
+                'paketgym' => 'required',
+                'hargapaket' => 'required',
+            ]);
+
+            PaketGym::create($request->all());
+            return redirect()->route('paketgyms.index')->with('Sukses', 'Paket Gym telah ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(cr $cr)
+    public function show(PaketGym $PaketGym)
     {
         //
     }
@@ -42,24 +51,34 @@ class PaketGymController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(cr $cr)
+    public function edit(string $id)
     {
-        //
+        $PaketGym = PaketGym::find($id);
+        return view('admin.paketgym.index', compact('PaketGym'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, cr $cr)
+    public function update(Request $request, string $id)
     {
-        //
+        $PaketGym = PaketGym::find($id);
+        $PaketGym->paketgym = $request['paketgym'];
+        $PaketGym->harga = $request['hargapaket'];
+        $PaketGym->save();
+        if ($PaketGym) {
+            return redirect()->route('paketgyms.index')->with('Sukses', 'Paket GYM berhasil diubah');
+        } else {
+            return redirect()->route('paketgyms.edit', $PaketGym->id)->with('Error', 'Paket Gym gagal diubah');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(cr $cr)
+    public function destroy(PaketGym $PaketGym)
     {
-        //
+        $PaketGym = PaketGym::destroy($id);
+        return redirect()->route('paketgyms.index')->with('Sukses', "Paket Gym telah dihapus");
     }
 }

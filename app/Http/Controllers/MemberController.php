@@ -12,7 +12,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        $Member = Member::all();
+        return view('admin.member.member', compact('Member'));
     }
 
     /**
@@ -20,7 +21,7 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.member.insert');
     }
 
     /**
@@ -28,7 +29,11 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+
+            ]
+        );
     }
 
     /**

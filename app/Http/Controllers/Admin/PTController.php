@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\cr;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class MemberController extends Controller
+class PTController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $Member = Member::all();
-        return view('admin.member.member', compact('Member'));
+        //
     }
 
     /**
@@ -21,7 +20,7 @@ class MemberController extends Controller
      */
     public function create()
     {
-        return view('admin.member.insert');
+        //
     }
 
     /**
@@ -29,17 +28,13 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(
-            [
-
-            ]
-        );
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(cr $cr)
+    public function show(string $id)
     {
         //
     }
@@ -47,7 +42,7 @@ class MemberController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(cr $cr)
+    public function edit(string $id)
     {
         //
     }
@@ -55,7 +50,7 @@ class MemberController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, cr $cr)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -63,7 +58,7 @@ class MemberController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(cr $cr)
+    public function destroy(string $id)
     {
         //
     }

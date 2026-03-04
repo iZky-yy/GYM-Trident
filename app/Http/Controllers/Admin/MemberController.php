@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\cr;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PegawaiController extends Controller
+class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class PegawaiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(cr $cr)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +42,7 @@ class PegawaiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(cr $cr)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +50,7 @@ class PegawaiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, cr $cr)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +58,7 @@ class PegawaiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(cr $cr)
+    public function destroy(string $id)
     {
         //
     }

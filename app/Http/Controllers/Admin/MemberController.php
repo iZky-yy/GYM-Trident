@@ -4,62 +4,82 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $members = User::where('role', 'member')->latest()->get();
+
+        return view('admin.members.index', compact('members'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.members.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'member'
+        ]);
+
+        return redirect()->route('admin.members.index')
+                         ->with('success', 'Member berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $member = User::where('role', 'member')->findOrFail($id);
+
+        return view('admin.members.show', compact('member'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $member = User::where('role', 'member')->findOrFail($id);
+
+        return view('admin.members.edit', compact('member'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $member = User::where('role', 'member')->findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $member->id,
+        ]);
+
+        $member->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        return redirect()->route('admin.members.index')
+                         ->with('success', 'Member berhasil diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $member = User::where('role', 'member')->findOrFail($id);
+
+        $member->delete();
+
+        return redirect()->route('admin.members.index')
+                         ->with('success', 'Member berhasil dihapus');
     }
 }

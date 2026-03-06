@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nama_paket');
             $table->integer('durasi_hari');
             $table->integer('harga');
-            $table->integer('max_kunjungan')->nullable();
             $table->timestamps();
         });
     }

@@ -25,12 +25,11 @@ class PaketGymController extends Controller
             'nama_paket' => 'required|string|max:255',
             'durasi_hari' => 'required|integer',
             'harga' => 'required|integer',
-            'max_kunjungan' => 'nullable|integer'
         ]);
 
         PaketGym::create($request->all());
 
-        return redirect()->route('admin.paketgym.index')
+        return redirect()->route('paket.index')
                          ->with('success','Paket berhasil ditambahkan');
     }
 
@@ -59,12 +58,11 @@ class PaketGymController extends Controller
             'nama_paket' => 'required|string|max:255',
             'durasi_hari' => 'required|integer',
             'harga' => 'required|integer',
-            'max_kunjungan' => 'nullable|integer'
         ]);
 
         $paket->update($request->all());
 
-        return redirect()->route('admin.paketgym.index')
+        return redirect()->route('paket.index')
                          ->with('success','Paket berhasil diupdate');
     }
 

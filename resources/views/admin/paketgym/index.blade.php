@@ -27,9 +27,9 @@
                 <td>{{$item->harga}}</td>
                 <td>{{$item->durasi_hari}}</td>
                 <td class="d-flex">
-                    <a class="btn btn-primary me-2" href="{{ route('admin.paket.edit', $item->id) }}"
+                    <a class="btn btn-primary me-2" href="{{ route('paket.edit', $item->id) }}"
                         role="button"><i class='bx bxs-edit'></i></a>
-                    <form action="{{ route('admin.paket.destroy', $item->id) }}" method="POST">
+                    <form action="{{ route('paket.destroy', $item->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-primary"><i class='bx bxs-trash'></i></button>

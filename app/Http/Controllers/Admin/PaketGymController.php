@@ -4,62 +4,78 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\PaketGym;
 
 class PaketGymController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $pakets = PaketGym::latest()->get();
+        return view('admin.paketgym.index', compact('pakets'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.paketgym.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_paket' => 'required|string|max:255',
+            'durasi_hari' => 'required|integer',
+            'harga' => 'required|integer',
+            'max_kunjungan' => 'nullable|integer'
+        ]);
+
+        PaketGym::create($request->all());
+
+        return redirect()->route('admin.paketgym.index')
+                         ->with('success','Paket berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
-        //
+        $paket = PaketGym::findOrFail($id);
+
+        return view('admin.paketgym.show', compact('paket'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
-        //
+        $paket = PaketGym::findOrFail($id);
+
+        return view('admin.paketgym.edit', compact('paket'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
-        //
+        $paket = PaketGym::findOrFail($id);
+
+        $request->validate([
+            'nama_paket' => 'required|string|max:255',
+            'durasi_hari' => 'required|integer',
+            'harga' => 'required|integer',
+            'max_kunjungan' => 'nullable|integer'
+        ]);
+
+        $paket->update($request->all());
+
+        return redirect()->route('admin.paketgym.index')
+                         ->with('success','Paket berhasil diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
-        //
+        $paket = PaketGym::findOrFail($id);
+
+        $paket->delete();
+
+        return redirect()->route('admin.paketgym.index')
+                         ->with('success','Paket berhasil dihapus');
     }
 }

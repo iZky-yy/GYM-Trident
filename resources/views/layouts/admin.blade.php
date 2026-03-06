@@ -15,7 +15,7 @@
             <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
             <li><a href="{{ route('paket.index') }}">Paket Gym</a></li>
             <li><a href="{{ route('member.index') }}">Member</a></li>
-            <li><a href="{{ route('pt.index') }}">PT</a></li>
+            <li><a href="{{ route('personaltrainer.index') }}">Personal Trainer</a></li>
             <li><a href="{{ route('admin.rekap') }}">Rekap</a></li>
         </ul>
     </aside>

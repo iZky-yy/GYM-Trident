@@ -11,14 +11,14 @@ class MemberController extends Controller
 {
     public function index()
     {
-        $members = User::where('role', 'member')->latest()->get();
+        $member = User::where('role', 'member')->latest()->get();
 
-        return view('admin.members.index', compact('members'));
+        return view('admin.member.index', compact('member'));
     }
 
     public function create()
     {
-        return view('admin.members.create');
+        return view('admin.member.create');
     }
 
 
@@ -37,7 +37,7 @@ class MemberController extends Controller
             'role' => 'member'
         ]);
 
-        return redirect()->route('admin.members.index')
+        return redirect()->route('admin.member.index')
                          ->with('success', 'Member berhasil ditambahkan');
     }
 
@@ -45,14 +45,14 @@ class MemberController extends Controller
     {
         $member = User::where('role', 'member')->findOrFail($id);
 
-        return view('admin.members.show', compact('member'));
+        return view('admin.member.show', compact('member'));
     }
 
     public function edit(string $id)
     {
         $member = User::where('role', 'member')->findOrFail($id);
 
-        return view('admin.members.edit', compact('member'));
+        return view('admin.member.edit', compact('member'));
     }
 
     public function update(Request $request, string $id)
@@ -69,7 +69,7 @@ class MemberController extends Controller
             'email' => $request->email,
         ]);
 
-        return redirect()->route('admin.members.index')
+        return redirect()->route('admin.member.index')
                          ->with('success', 'Member berhasil diupdate');
     }
 
@@ -79,7 +79,7 @@ class MemberController extends Controller
 
         $member->delete();
 
-        return redirect()->route('admin.members.index')
+        return redirect()->route('admin.member.index')
                          ->with('success', 'Member berhasil dihapus');
     }
 }

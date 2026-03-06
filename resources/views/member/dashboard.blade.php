@@ -6,6 +6,5 @@
 <p>Status paket aktif:</p>
 
 <div class="bg-white p-4 shadow rounded mt-4">
-    <!-- Info paket -->
 </div>
 @endsection

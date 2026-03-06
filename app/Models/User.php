@@ -64,4 +64,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Absensi::class);
     }
+    public function paketMembers()
+    {
+        return $this->hasMany(MemberPaket::class, 'member_id');
+    }
+
+    public function ptMembers()
+    {
+        return $this->hasMany(MemberPaket::class, 'pt_id');
+    }
 }

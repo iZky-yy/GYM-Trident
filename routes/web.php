@@ -60,7 +60,7 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
 
     Route::resource('paket', PaketGymController::class);
     Route::resource('member', MemberController::class);
-    Route::resource('pt', PTController::class);
+    Route::resource('personaltrainer', PTController::class);
 
     Route::get('/transaksi', [TransaksiController::class,'index'])
         ->name('admin.transaksi');

@@ -18,6 +18,7 @@ return new class extends Migration
                   ->default('member');
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
+            $table->date('birthday')->nullable();
             $table->string('photo')->nullable();
             $table->uuid('qr_token')->unique();
             $table->rememberToken();

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class MemberController extends Controller
 {
@@ -28,16 +29,23 @@ class MemberController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
+            'address' => 'required',
+            'birthday' => 'required',
+            'phone' => 'required',
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'address' => $request->address,
+            'birthday' => $request->birthday,
+            'phone' => $request->phone,
+            'qr_token' => Str::uuid(),
             'role' => 'member'
         ]);
 
-        return redirect()->route('admin.member.index')
+        return redirect()->route('member.index')
                          ->with('success', 'Member berhasil ditambahkan');
     }
 
@@ -45,7 +53,7 @@ class MemberController extends Controller
     {
         $member = User::where('role', 'member')->findOrFail($id);
 
-        return view('admin.member.show', compact('member'));
+        return view('member.show', compact('member'));
     }
 
     public function edit(string $id)
@@ -62,14 +70,26 @@ class MemberController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $member->id,
+            'password' => 'nullable|min:6',
+            'address' => 'required',
+            'birthday' => 'required',
+            'phone' => 'required',
         ]);
 
         $member->update([
             'name' => $request->name,
             'email' => $request->email,
+            'address' => $request->address,
+            'birthday' => $request->birthday,
+            'phone' => $request->phone,
         ]);
+        if ($request->password) {
+            $member->update([
+                'password' => Hash::make($request->password)
+            ]);
+        }
 
-        return redirect()->route('admin.member.index')
+        return redirect()->route('member.index')
                          ->with('success', 'Member berhasil diupdate');
     }
 

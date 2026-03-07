@@ -36,23 +36,23 @@ class PaketGymController extends Controller
 
     public function show(string $id)
     {
-        $paket = PaketGym::findOrFail($id);
+        $pakets = PaketGym::findOrFail($id);
 
-        return view('admin.paketgym.show', compact('paket'));
+        return view('admin.paketgym.show', compact('pakets'));
     }
 
 
     public function edit(string $id)
     {
-        $paket = PaketGym::findOrFail($id);
+        $pakets = PaketGym::findOrFail($id);
 
-        return view('admin.paketgym.edit', compact('paket'));
+        return view('admin.paketgym.edit', compact('pakets'));
     }
 
 
     public function update(Request $request, string $id)
     {
-        $paket = PaketGym::findOrFail($id);
+        $pakets = PaketGym::findOrFail($id);
 
         $request->validate([
             'nama_paket' => 'required|string|max:255',
@@ -60,7 +60,7 @@ class PaketGymController extends Controller
             'harga' => 'required|integer',
         ]);
 
-        $paket->update($request->all());
+        $pakets->update($request->all());
 
         return redirect()->route('paket.index')
                          ->with('success','Paket berhasil diupdate');
@@ -69,9 +69,9 @@ class PaketGymController extends Controller
 
     public function destroy(string $id)
     {
-        $paket = PaketGym::findOrFail($id);
+        $pakets = PaketGym::findOrFail($id);
 
-        $paket->delete();
+        $pakets->delete();
 
         return redirect()->route('admin.paketgym.index')
                          ->with('success','Paket berhasil dihapus');

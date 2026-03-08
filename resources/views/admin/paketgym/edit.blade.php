@@ -11,7 +11,7 @@
                 @method('PUT')
                 <div>
                     <label for="nama_paket" class="form-label">Paket GYM</label>
-                    <input type="string" id="nama_paket" name="nama_paket" placeholder="Ex : Trident 1 Bulan" class="form-control" value="{{$pakets->nama_paket}}">
+                    <input type="string" id="nama_paket" name="nama_paket" class="form-control" value="{{$pakets->nama_paket}}">
                     <div style="color: red">
                         @error('nama_paket')
                             {{$message}}
@@ -20,7 +20,7 @@
                 </div>
                 <div>
                     <label for="harga" class="form-label">Harga Paket</label>
-                    <input type="number" id="harga" name="harga" placeholder="Ex : 100.000" class="form-control" value="{{$pakets->harga}}">
+                    <input type="number" id="harga" name="harga" class="form-control" value="{{$pakets->harga}}">
                     <div style="color: red">
                         @error('harga')
                             {{$message}}
@@ -29,7 +29,7 @@
                 </div>
                 <div>
                     <label for="durasi_hari" class="form-label">Durasi</label>
-                    <input type="number" id="durasi_hari" name="durasi_hari" placeholder="" class="form-control" value="{{$pakets->durasi_hari}}">
+                    <input type="number" id="durasi_hari" name="durasi_hari" class="form-control" value="{{$pakets->durasi_hari}}">
                     <div style="color: red">
                         @error('durasi_hari')
                             {{$message}}

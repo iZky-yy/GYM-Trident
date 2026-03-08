@@ -36,7 +36,6 @@
                                     <a class="btn btn-warning btn-sm" href="{{ route('paket.edit', $item->id) }}">
                                         <i class='bx bxs-edit'></i>
                                     </a>
-
                                     <form action="{{ route('paket.destroy', $item->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')

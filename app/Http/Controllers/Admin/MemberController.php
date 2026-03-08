@@ -52,21 +52,18 @@ class MemberController extends Controller
     public function show(string $id)
     {
         $member = User::where('role', 'member')->findOrFail($id);
-
         return view('member.show', compact('member'));
     }
 
     public function edit(string $id)
     {
         $member = User::where('role', 'member')->findOrFail($id);
-
         return view('admin.member.edit', compact('member'));
     }
 
     public function update(Request $request, string $id)
     {
         $member = User::where('role', 'member')->findOrFail($id);
-
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $member->id,
@@ -96,10 +93,7 @@ class MemberController extends Controller
     public function destroy(string $id)
     {
         $member = User::where('role', 'member')->findOrFail($id);
-
         $member->delete();
-
-        return redirect()->route('admin.member.index')
-                         ->with('success', 'Member berhasil dihapus');
+        return back()->with('success', 'Member berhasil dihapus');
     }
 }

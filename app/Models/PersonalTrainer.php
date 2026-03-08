@@ -6,5 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class PersonalTrainer extends Model
 {
-    //
+    protected $fillable = [
+        'user_id',
+        'spesialisasi',
+        'tarif_per_sesi'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

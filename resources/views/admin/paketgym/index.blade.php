@@ -24,7 +24,7 @@
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>{{ $item->nama_paket }}</td>
-                                <td>{{ $item->harga }}</td>
+                                <td>Rp {{ number_format($item->harga) }}</td>
                                 <td>
                                     @if ($item->durasi_hari % 30 == 0)
                                         {{ $item->durasi_hari / 30 }} Bulan

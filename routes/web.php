@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\PTController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\RekapController;
+use App\Http\Controllers\Member\MembershipController;
+
 
 
 /*
@@ -90,6 +92,7 @@ Route::middleware(['auth','role:member'])->prefix('member')->group(function(){
 
     Route::get('/dashboard', [MemberDashboardController::class,'index'])
         ->name('member.dashboard');
+        Route::resource('membership', MembershipController::class);
 
 });
 

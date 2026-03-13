@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\PTController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\RekapController;
+
+// Member Controller
 use App\Http\Controllers\Member\MembershipController;
 
 

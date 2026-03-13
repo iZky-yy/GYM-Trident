@@ -10,7 +10,6 @@ class PaketGym extends Model
         'nama_paket',
         'durasi_hari',
         'harga',
-        'max_kunjungan'
     ];
 
     public function members()

@@ -1,46 +1,39 @@
 @extends('layouts.admin')
+
 @section('title')
-    Edit Paket GYM
+Tambah Paket GYM
 @endsection
 @section('content')
-<div class="container">
-    <div class="card">
-        <div class="card-body">
-            <form class="row g-3" action="{{ route('paket.update', $pakets->id)}}" method="post" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div>
-                    <label for="nama_paket" class="form-label">Paket GYM</label>
-                    <input type="string" id="nama_paket" name="nama_paket" class="form-control" value="{{$pakets->nama_paket}}">
-                    <div style="color: red">
-                        @error('nama_paket')
-                            {{$message}}
-                        @enderror
-                    </div>
+<div class="content">
+    <div class="form-container">
+        <h2 class="form-title">Tambah Paket GYM</h2>
+        <form action="{{ route('paket.update', $pakets->id)}}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group">
+                <label>Paket GYM</label>
+                <input type="string" id="nama_paket" name="nama_paket" placeholder="Ex : Trident 1 Bulan" class="form-input" value="{{$pakets->nama_paket}}">
+                <div class="form-error">
+                    @error('nama_paket') {{ $message }} @enderror
                 </div>
-                <div>
-                    <label for="harga" class="form-label">Harga Paket</label>
-                    <input type="number" id="harga" name="harga" class="form-control" value="{{$pakets->harga}}">
-                    <div style="color: red">
-                        @error('harga')
-                            {{$message}}
-                        @enderror
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="harga" class="form-label">Harga Paket</label>
+                    <input type="number" id="harga" name="harga" placeholder="Ex : 100.000" class="form-input" value="{{$pakets->harga}}}">
+                <div class="form-error">
+                    @error('harga') {{ $message }} @enderror
                 </div>
-                <div>
-                    <label for="durasi_hari" class="form-label">Durasi</label>
-                    <input type="number" id="durasi_hari" name="durasi_hari" class="form-control" value="{{$pakets->durasi_hari}}">
-                    <div style="color: red">
-                        @error('durasi_hari')
-                            {{$message}}
-                        @enderror
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="durasi_hari" class="form-label">Durasi</label>
+                    <input type="number" id="durasi_hari" name="durasi_hari" placeholder="" class="form-input" value="{{$pakets->durasi_hari}}">
+                <div class="form-error">
+                    @error('durasi_hari') {{ $message }} @enderror
                 </div>
-                <div>
-                    <button type="submit" class="btn btn-primary">Simpan Data</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <button type="submit" class="btn-submit">
+                Tambah Data
+            </button>
+        </form>
     </div>
 </div>
 @endsection

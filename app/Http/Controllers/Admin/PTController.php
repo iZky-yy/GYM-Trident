@@ -48,6 +48,45 @@ class PTController extends Controller
                          ->with('success','PT berhasil ditambahkan');
     }
 
+    public function edit($id)
+    {
+        $pts = PersonalTrainer::with('user')->findOrFail($id);
+        return view('admin.personaltrainer.edit', compact('pts'));
+    }
+
+    public function update(Request $request, $id)
+    {
+
+    $pt = PersonalTrainer::with('user')->findOrFail($id);
+
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,' . $pt->user_id,
+        'password' => 'nullable|min:6',
+        'spesialisasi' => 'nullable',
+        'tarif_per_sesi' => 'nullable|numeric'
+    ]);
+
+    $user = $pt->user;
+
+    $user->name = $request->name;
+    $user->email = $request->email;
+
+    if($request->password){
+        $user->password = Hash::make($request->password);
+    }
+
+    $user->save();
+
+    $pt->update([
+        'spesialisasi' => $request->spesialisasi,
+        'tarif_per_sesi' => $request->tarif_per_sesi
+    ]);
+
+    return redirect()->route('personaltrainer.index')
+        ->with('success','PT berhasil diupdate');
+}
+
     public function destroy($id)
     {
         $pt = PersonalTrainer::findOrFail($id);

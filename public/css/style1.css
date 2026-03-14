@@ -180,3 +180,149 @@ body {
     border-radius: 6px;
     cursor: pointer;
 }
+/* TABLE AREA */
+.table-wrapper{
+    background-color: #1a1a1a;
+    padding: 30px;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.table-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.table-title h2{
+    font-size:20px;
+}
+
+/* BUTTON ADD */
+.btn-add{
+    background:#A3FF12;
+    color:black;
+    padding:8px 18px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* TABLE */
+.custom-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.custom-table thead th{
+    text-align:left;
+    color:#888;
+    font-size:13px;
+    padding-bottom:15px;
+    border-bottom:1px solid #333;
+}
+
+.custom-table tbody td{
+    padding:15px 0;
+    border-bottom:1px solid #222;
+}
+
+/* HOVER ROW */
+.custom-table tbody tr:hover{
+    background:#111;
+}
+
+/* ACTION BUTTON */
+.btn-action{
+    padding:5px 12px;
+    border-radius:6px;
+    font-size:12px;
+    text-decoration:none;
+}
+
+.btn-edit{
+    border:1px solid #444;
+    color:white;
+    background:transparent;
+}
+
+.btn-delete{
+    background:#ff4444;
+    color:white;
+}
+
+/* FLEX BUTTON */
+.action-group{
+    display:flex;
+    gap:10px;
+}
+/* FORM CARD */
+.form-container{
+    background:#1a1a1a;
+    padding:35px;
+    border-radius:20px;
+    max-width:700px;
+}
+
+/* TITLE */
+.form-title{
+    font-size:20px;
+    margin-bottom:25px;
+}
+
+/* FORM GROUP */
+.form-group{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:18px;
+}
+
+/* LABEL */
+.form-group label{
+    font-size:13px;
+    color:#888;
+    margin-bottom:6px;
+}
+
+/* INPUT */
+.form-input{
+    background:#111;
+    border:1px solid #333;
+    padding:10px 14px;
+    border-radius:8px;
+    color:white;
+    font-size:14px;
+}
+
+.form-input::placeholder{
+    color:#666;
+}
+
+/* INPUT FOCUS */
+.form-input:focus{
+    outline:none;
+    border:1px solid #A3FF12;
+}
+
+/* ERROR */
+.form-error{
+    color:#ff4444;
+    font-size:12px;
+    margin-top:4px;
+}
+
+/* BUTTON */
+.btn-submit{
+    background:#A3FF12;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.btn-submit:hover{
+    filter:brightness(0.9);
+}

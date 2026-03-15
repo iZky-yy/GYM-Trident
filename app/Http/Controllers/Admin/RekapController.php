@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\PaketGym;
 use App\Models\User;
 use App\Models\PersonalTrainer;
+use App\Models\Membership;
 
 class RekapController extends Controller
 {
@@ -18,23 +19,22 @@ class RekapController extends Controller
 
         if ($tgl_mulai && $tgl_selesai) {
 
-            $member = User::where('role','member')
-                ->whereBetween('created_at', [$tgl_mulai, $tgl_selesai])
-                ->get();
+        $member = User::where('role','member')
+            ->whereBetween('created_at', [$tgl_mulai, $tgl_selesai])
+            ->get();
 
         } else {
 
             $member = User::where('role','member')->get();
         }
-
         $pts = PersonalTrainer::with('user')->get();
-
         $pakets = PaketGym::all();
-
+        $memberships = Membership::All();
         return view('admin.rekap.index', compact(
             'member',
             'pts',
-            'pakets'
+            'pakets',
+            'memberships'
         ));
     }
 }

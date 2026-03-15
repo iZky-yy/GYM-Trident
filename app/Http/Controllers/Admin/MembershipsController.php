@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Member;
+namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Membership;
 use App\Models\User;
@@ -8,7 +8,7 @@ use App\Models\PaketGym;
 use App\Models\PersonalTrainer;
 use Illuminate\Http\Request;
 
-class MembershipController extends Controller
+class MembershipsController extends Controller
 {
 
     public function index()
@@ -19,33 +19,8 @@ class MembershipController extends Controller
             'pt.user'
         ])->get();
 
-        return view('member.membership.index', compact('memberships'));
+        return view('admin.membership.index', compact('memberships'));
     }
-
-
-    public function create()
-    {
-        $members = User::all();
-        $pakets = PaketGym::all();
-        $pts = PersonalTrainer::with('user')->get();
-
-        return view('member.membership.create', compact('members','pakets','pts'));
-    }
-
-
-    public function store(Request $request)
-    {
-        Membership::create([
-            'paket_id' => $request->paket_id,
-            'personal_trainer_id' => $request->personal_trainer_id,
-            'tanggal_mulai' => $request->tanggal_mulai,
-            'status' => 'active'
-        ]);
-
-        return redirect()->route('membership.index')
-            ->with('success','Membership berhasil ditambahkan');
-    }
-
 
     public function edit($id)
     {
@@ -54,7 +29,7 @@ class MembershipController extends Controller
         $pakets = PaketGym::all();
         $pts = PersonalTrainer::with('user')->get();
 
-        return view('member.membership.edit', compact('membership','members','pakets','pts'));
+        return view('admin.membership.edit', compact('membership','members','pakets','pts'));
     }
 
 

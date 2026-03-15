@@ -31,7 +31,6 @@ return new class extends Migration
 
             // tanggal membership
             $table->date('tanggal_mulai');
-            $table->date('tanggal_akhir');
 
             // sisa kunjungan
             $table->integer('sisa_kunjungan')->nullable();

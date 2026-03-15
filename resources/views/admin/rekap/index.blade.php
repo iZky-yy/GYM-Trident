@@ -1,64 +1,58 @@
 @extends('layouts.admin')
+
 @section('title')
+    Rekap GYM
 @endsection
+
 @section('content')
-    <div class="container">
-        <div class="card-body">
-            <h1 class="card-title">REKAP GYM</h1>
+    <div class="content">
+        <h1 class="rekap-title">Rekap GYM</h1>
+        <!-- FILTER TANGGAL -->
+        <div class="filter-box">
+            <form method="GET" action="/recap" class="filter-form">
+                <input type="date" name="tgl_mulai" value="{{ old('tgl_mulai') }}" class="filter-input">
+                <input type="date" name="tgl_keluar" value="{{ old('tgl_keluar') }}" class="filter-input">
+                <button type="submit" class="filter-btn">
+                    Tampilkan Data
+                </button>
+            </form>
         </div>
-        <hr>
-        <div class="row">
-            <div class="col-sm-8">
-                <form class="row g-3 mb-3" method="get" action="/recap" enctype="multipart/form-data">
-                    @csrf
-                    <div class="col-md-3">
-                        <input type="date" value="{{ old('tgl_mulai') }}" name="tgl_mulai" class="form-control">
-                    </div>
-                    <div class="col-md-3">
-                        <input type="date" value="{{ old('tgl_keluar') }}" name="tgl_keluar" class="form-control">
-                    </div>
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-primary">Tampilkan Data</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <hr>
-        <div class="card">
-            <div class="card-header">Member GYM</div>
-            <table class="table table-striped">
+        <!-- MEMBER -->
+        <div class="table-wrapper">
+            <h2 class="section-title">Member GYM</h2>
+            <table class="custom-table">
                 <thead>
                     <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Alamat</th>
-                        <th scope="col">Telepon</th>
-                        <th scope="col">Tanggal Lahir</th>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Alamat</th>
+                        <th>Telepon</th>
+                        <th>Tanggal Lahir</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($member as $member)
+                    @foreach ($member as $item)
                         <tr>
-                            <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $member->name }}</td>
-                            <td>{{ $member->address }}</td>
-                            <td>{{ $member->phone }}</td>
-                            <td>{{ \Carbon\Carbon::parse($member->birthday)->format('d M Y') }}</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->address }}</td>
+                            <td>{{ $item->phone }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->birthday)->format('d M Y') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <hr>
-        <div class="card">
-            <div class="card-header">PT GYM</div>
-            <table class="table table-striped">
+        <!-- PT -->
+        <div class="table-wrapper">
+            <h2 class="section-title">Personal Trainer</h2>
+            <table class="custom-table">
                 <thead>
                     <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Spesialisasi</th>
-                        <th scope="col">Tarif / sesi</th>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Spesialisasi</th>
+                        <th>Tarif / Sesi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,26 +64,65 @@
                             <td>Rp {{ number_format($pt->tarif_per_sesi) }}</td>
                         </tr>
                     @endforeach
+
                 </tbody>
+
             </table>
+
         </div>
-        <hr>
-        <div class="card">
-            <div class="card-header">Paket GYM</div>
-            <table class="table table-striped">
+        <!-- PAKET -->
+        <div class="table-wrapper">
+            <h2 class="section-title">Paket GYM</h2>
+            <table class="custom-table">
                 <thead>
                     <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Paket GYM</th>
-                        <th scope="col">Harga</th>
+                        <th>No</th>
+                        <th>Paket</th>
+                        <th>Harga</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($pakets as $paket)
                         <tr>
-                            <th scope="row">{{ $loop->iteration }}</th>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $paket->nama_paket }}</td>
                             <td>Rp {{ number_format($paket->harga) }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <!-- MEMBERSHIP -->
+        <div class="table-wrapper">
+            <h2 class="section-title">Membership</h2>
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Member</th>
+                        <th>Paket</th>
+                        <th>Personal Trainer</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Akhir</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($memberships as $key => $m)
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $m->member->name }}</td>
+                            <td>{{ $m->paket->nama_paket }}</td>
+                            <td>{{ $m->pt->user->name }}</td>
+                            <td>{{ $m->tanggal_mulai }}</td>
+                            <td>{{ $m->tanggal_akhir }}</td>
+                            <td>
+                                @if ($m->status == 'aktif')
+                                    <span class="badge active">Aktif</span>
+                                @else
+                                    <span class="badge expired">Expired</span>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

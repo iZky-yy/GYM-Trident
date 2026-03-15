@@ -326,3 +326,51 @@ body {
 .btn-submit:hover{
     filter:brightness(0.9);
 }
+/* REKAP PAGE */
+
+.rekap-title{
+    font-size:26px;
+    margin-bottom:20px;
+}
+
+/* FILTER */
+.filter-box{
+    background:#1a1a1a;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:30px;
+}
+
+.filter-form{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.filter-input{
+    background:#111;
+    border:1px solid #333;
+    padding:8px 12px;
+    border-radius:8px;
+    color:white;
+}
+
+.filter-input:focus{
+    outline:none;
+    border:1px solid #A3FF12;
+}
+
+.filter-btn{
+    background:#A3FF12;
+    border:none;
+    padding:8px 18px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* SECTION TITLE */
+.section-title{
+    font-size:18px;
+    margin-bottom:15px;
+}

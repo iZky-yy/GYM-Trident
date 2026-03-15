@@ -18,7 +18,7 @@
             </div>
         </header>
 
-        {{-- <div class="stats-container">
+         {{-- <div class="stats-container">
 
             <div class="stat-box">
                 <p class="stat-label">TOTAL MEMBERS</p>
@@ -44,7 +44,7 @@
                 <p class="stat-trend green">Paket GYM</p>
             </div>
 
-        </div>
+        </div> --}}
 
         <div class="table-section">
             <div class="table-header">
@@ -72,8 +72,8 @@
                             <td>{{ $m->tanggal_mulai }}</td>
                             <td>{{ $m->tanggal_akhir }}</td>
                             <td>
-                                @if ($m->status == 'aktif')
-                                    <span class="badge active">Aktif</span>
+                                @if ($m->status == 'active')
+                                    <span class="badge active">Active</span>
                                 @else
                                     <span class="badge expired">Expired</span>
                                 @endif
@@ -82,6 +82,6 @@
                     @endforeach
                 </tbody>
             </table>
-        </div> --}}
+        </div>
     </main>
 @endsection

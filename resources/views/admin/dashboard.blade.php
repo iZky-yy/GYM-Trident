@@ -68,12 +68,12 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $m->member->name }}</td>
                             <td>{{ $m->paket->nama_paket }}</td>
-                            <td>{{ $m->pt->user->name }}</td>
+                            <td>{{ $m->pt->user->name ?? 'Tanpa PT' }}</td>
                             <td>{{ $m->tanggal_mulai }}</td>
                             <td>{{ $m->tanggal_akhir }}</td>
                             <td>
-                                @if ($m->status == 'aktif')
-                                    <span class="badge active">Aktif</span>
+                                @if ($m->status == 'active')
+                                    <span class="badge active">Active</span>
                                 @else
                                     <span class="badge expired">Expired</span>
                                 @endif

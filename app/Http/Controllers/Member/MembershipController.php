@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\PaketGym;
 use App\Models\PersonalTrainer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MembershipController extends Controller
 {
@@ -36,6 +37,7 @@ class MembershipController extends Controller
     public function store(Request $request)
     {
         Membership::create([
+            'member_id' => Auth::id(),
             'paket_id' => $request->paket_id,
             'personal_trainer_id' => $request->personal_trainer_id,
             'tanggal_mulai' => now(),

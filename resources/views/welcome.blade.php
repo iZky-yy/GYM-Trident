@@ -142,7 +142,7 @@
 
     <section id="pricing" class="pricing">
         <div class="container">
-            <h2>PRIC</h2>
+            <h2>HARGA PAKET</h2>
             <div class="price-grid">
                 <div class="price-card">
                     <h3>Trident GYM</h3>

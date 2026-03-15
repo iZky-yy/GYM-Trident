@@ -114,15 +114,14 @@ Route::post('/scan-qr/{token}', [AbsensiController::class,'scan'])
     ->middleware('auth')
     ->name('scan.qr');
 
-
-/*
-| PROFILE ROUTE (Breeze Default)
-*/
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+ /*
+ | PROFILE
+ */
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class,'index'])->name('profile.index');
+    Route::post('/profile/update', [ProfileController::class,'update'])->name('profile.update');
+    Route::post('/profile/password', [ProfileController::class,'password'])->name('profile.password');
+    Route::delete('/profile/delete', [ProfileController::class,'delete'])->name('profile.delete');
 });
 
 

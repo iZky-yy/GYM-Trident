@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Models\PersonalTrainer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PTController extends Controller
 {
@@ -21,7 +24,7 @@ class PTController extends Controller
         return view('admin.personaltrainer.create');
     }
 
-    public function store(Request $request)
+   public function store(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -30,24 +33,36 @@ class PTController extends Controller
             'spesialisasi' => 'nullable',
             'tarif_per_sesi' => 'nullable|numeric'
         ]);
-
+    
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'pt'
+            'role' => 'pt',
+            'qr_token' => Str::uuid()
         ]);
-
+    
+        // generate QR
+        $qrName = 'user_'.$user->id.'.png';
+    
+        Storage::disk('public')->put(
+            'qrcodes/'.$qrName,
+            QrCode::format('png')->size(300)->generate($user->qr_token)
+        );
+    
+        $user->update([
+            'qr_code' => 'qrcodes/'.$qrName
+        ]);
+    
         PersonalTrainer::create([
             'user_id' => $user->id,
             'spesialisasi' => $request->spesialisasi,
             'tarif_per_sesi' => $request->tarif_per_sesi
         ]);
-
+    
         return redirect()->route('personaltrainer.index')
                          ->with('success','PT berhasil ditambahkan');
     }
-
     public function edit($id)
     {
         $pts = PersonalTrainer::with('user')->findOrFail($id);

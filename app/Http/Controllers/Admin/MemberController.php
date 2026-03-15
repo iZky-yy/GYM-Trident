@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
@@ -34,7 +36,7 @@ class MemberController extends Controller
             'phone' => 'required',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -43,6 +45,16 @@ class MemberController extends Controller
             'phone' => $request->phone,
             'qr_token' => Str::uuid(),
             'role' => 'member'
+        ]);
+        $qrName = 'user_'.$user->id.'.png';
+
+        Storage::disk('public')->put(
+            'qrcodes/'.$qrName,
+            QrCode::format('png')->size(300)->generate($user->qr_token)
+        );
+        
+        $user->update([
+            'qr_code' => 'qrcodes/'.$qrName
         ]);
 
         return redirect()->route('member.index')

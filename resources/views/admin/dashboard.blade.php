@@ -12,9 +12,11 @@
                     <p class="user-name">{{ Auth::user()->name }}</p>
                     <p class="user-status">Online</p>
                 </div>
-                <div class="user-avatar">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
-                </div>
+                <a href="{{ route('profile.index') }}">
+                    <div class="user-avatar">
+                        {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                    </div>
+                </a>
             </div>
         </header>
 

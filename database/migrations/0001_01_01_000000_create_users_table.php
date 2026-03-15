@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('birthday')->nullable();
             $table->string('photo')->nullable();
             $table->uuid('qr_token')->unique();
+            $table->string('qr_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -12,13 +12,15 @@
                     <p class="user-name">{{ Auth::user()->name }}</p>
                     <p class="user-status">Online</p>
                 </div>
-                <div class="user-avatar">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
-                </div>
+                <a href="{{ route('profile.index') }}">
+                    <div class="user-avatar">
+                        {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                    </div>
+                </a>
             </div>
         </header>
 
-         {{-- <div class="stats-container">
+        {{-- <div class="stats-container">
 
             <div class="stat-box">
                 <p class="stat-label">TOTAL MEMBERS</p>
@@ -68,7 +70,7 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $m->member->name }}</td>
                             <td>{{ $m->paket->nama_paket }}</td>
-                            <td>{{ $m->pt->user->name }}</td>
+                            <td>{{ $m->pt->user->name ?? 'Tanpa PT' }}</td>
                             <td>{{ $m->tanggal_mulai }}</td>
                             <td>{{ $m->tanggal_akhir }}</td>
                             <td>

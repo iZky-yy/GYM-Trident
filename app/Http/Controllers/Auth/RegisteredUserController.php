@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -23,7 +26,6 @@ class RegisteredUserController extends Controller
     }
 
     /**
-     * Handle an incoming registration request.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -39,6 +41,19 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'qr_token' => Str::uuid()
+        ]);
+
+        // Generate QR
+        $qrName = 'user_'.$user->id.'.svg';
+
+        Storage::disk('public')->put(
+            'qrcodes/'.$qrName,
+            QrCode::format('svg')->size(300)->generate(url('/scan/'.$user->qr_token))
+        );
+
+        $user->update([
+            'qr_code' => 'qrcodes/'.$qrName
         ]);
 
         event(new Registered($user));

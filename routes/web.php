@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\MembershipsController;
 
 // Member Controller
 use App\Http\Controllers\Member\MembershipController;
+use App\Http\Controllers\Member\MembersController;
 
 
 
@@ -100,6 +101,7 @@ Route::middleware(['auth','role:member'])->prefix('member')->group(function(){
     Route::get('/dashboard', [MemberDashboardController::class,'index'])
         ->name('member.dashboard');
         Route::resource('membership', MembershipController::class);
+        Route::resource('members', MembersController::class);
 
 });
 

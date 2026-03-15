@@ -188,6 +188,13 @@ nav ul li a {
     margin-bottom: 20px;
 }
 
+.trainer-placeholder img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 .rating {
     color: #A3FF12;
     margin: 10px 0;

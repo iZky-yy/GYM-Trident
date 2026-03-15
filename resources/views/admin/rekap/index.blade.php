@@ -103,7 +103,6 @@
                         <th>Paket</th>
                         <th>Personal Trainer</th>
                         <th>Tanggal Mulai</th>
-                        <th>Tanggal Akhir</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -115,7 +114,6 @@
                             <td>{{ $m->paket->nama_paket }}</td>
                             <td>{{ $m->pt->user->name }}</td>
                             <td>{{ $m->tanggal_mulai }}</td>
-                            <td>{{ $m->tanggal_akhir }}</td>
                             <td>
                                 @if ($m->status == 'aktif')
                                     <span class="badge active">Aktif</span>

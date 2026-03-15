@@ -38,7 +38,7 @@ class MembershipController extends Controller
         Membership::create([
             'paket_id' => $request->paket_id,
             'personal_trainer_id' => $request->personal_trainer_id,
-            'tanggal_mulai' => $request->tanggal_mulai,
+            'tanggal_mulai' => now(),
             'status' => 'active'
         ]);
 
@@ -65,7 +65,6 @@ class MembershipController extends Controller
         $membership->update([
             'paket_id' => $request->paket_id,
             'personal_trainer_id' => $request->personal_trainer_id,
-            'tanggal_mulai' => $request->tanggal_mulai,
             'status' => $request->status
         ]);
 

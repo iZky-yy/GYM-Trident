@@ -19,19 +19,38 @@ class Membership extends Model
         'status'
     ];
 
-    // relasi ke member (users)
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($membership) {
+
+            if (!$membership->tanggal_mulai) {
+                $membership->tanggal_mulai = now();
+            }
+
+            $paket = PaketGym::find($membership->paket_id);
+
+            if ($paket) {
+                $membership->tanggal_akhir = now()->addDays($paket->durasi_hari);
+            }
+
+            if ($membership->tanggal_akhir < now()) {
+                $membership->status = 'expired';
+        }
+        });
+    }
+
     public function member()
     {
         return $this->belongsTo(User::class,'member_id');
     }
 
-    // relasi ke paket gym
     public function paket()
     {
         return $this->belongsTo(PaketGym::class,'paket_id');
     }
 
-    // relasi ke personal trainer
     public function pt()
     {
         return $this->belongsTo(PersonalTrainer::class,'personal_trainer_id');

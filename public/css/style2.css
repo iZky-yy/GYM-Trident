@@ -1,4 +1,9 @@
-/* AUTH PAGE (LOGIN & REGISTER) */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+/* AUTH PAGE */
 
 .auth-wrapper{
     width:100%;
@@ -6,22 +11,52 @@
     display:flex;
     justify-content:center;
     align-items:center;
+    background: url('https://images.unsplash.com/photo-1579758629938-03607ccdbaba') center/cover no-repeat;
+    position:relative;
+}
+
+/* dark overlay supaya form lebih jelas */
+.auth-wrapper::before{
+    content:'';
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.65);
+    backdrop-filter: blur(4px);
 }
 
 /* CARD */
 .auth-card{
-    background:#1a1a1a;
-    padding:40px;
-    border-radius:20px;
+    position:relative;
+    background:rgba(26,26,26,0.85);
+    backdrop-filter: blur(12px);
+    padding:45px 40px;
+    border-radius:18px;
     width:400px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
+    animation:fadeUp 0.6s ease;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 /* TITLE */
 .auth-title{
-    font-size:24px;
-    margin-bottom:25px;
+    margin-bottom:30px;
     text-align:center;
-    color: white;
+    color:white;
+    font-family:'Bebas Neue', sans-serif;
+    font-size:28px;
+    letter-spacing:1px;
 }
 
 .auth-title span{
@@ -37,7 +72,7 @@
 
 .auth-group label{
     font-size:13px;
-    color:#888;
+    color:#aaa;
     margin-bottom:6px;
 }
 
@@ -45,15 +80,17 @@
 .auth-input{
     background:#111;
     border:1px solid #333;
-    padding:10px 14px;
-    border-radius:8px;
+    padding:12px 14px;
+    border-radius:10px;
     color:white;
     font-size:14px;
+    transition:0.3s;
 }
 
 .auth-input:focus{
     outline:none;
     border:1px solid #A3FF12;
+    box-shadow:0 0 8px rgba(163,255,18,0.4);
 }
 
 /* ERROR */
@@ -66,24 +103,36 @@
 /* BUTTON */
 .auth-btn{
     width:100%;
-    background:#A3FF12;
+    background:linear-gradient(135deg,#A3FF12,#6DFF00);
     border:none;
-    padding:10px;
-    border-radius:8px;
+    padding:12px;
+    border-radius:10px;
     font-weight:600;
-    margin-top:10px;
+    margin-top:15px;
     cursor:pointer;
+    transition:0.3s;
+}
+
+.auth-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(163,255,18,0.5);
 }
 
 /* LINK */
 .auth-link{
-    margin-top:15px;
+    margin-top:18px;
     text-align:center;
     font-size:13px;
-    color: white;
+    color:white;
+    font-family:'Bebas Neue', sans-serif;
 }
 
 .auth-link a{
     color:#A3FF12;
     text-decoration:none;
+    transition:0.3s;
+}
+
+.auth-link a:hover{
+    text-decoration:underline;
 }

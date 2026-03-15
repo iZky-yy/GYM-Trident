@@ -3,22 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Absensi;
+use App\Models\PaketGym;
+use App\Models\Membership;
+
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $totalMember = User::where('role','member')->count();
-        $totalPT = User::where('role','pt')->count();
-        $kunjunganHariIni = Absensi::whereDate('waktu_masuk',today())->count();
+        $totalMembers = User::where('role','member')->count();
+        $activeTrainers = User::where('role','pt')->count();
+        $activeSessions = PaketGym::count();
+        $memberships = Membership::All();
+
 
         return view('admin.dashboard', compact(
-            'totalMember',
-            'totalPT',
-            'kunjunganHariIni'
+            'totalMembers',
+            'activeTrainers',
+            'activeSessions',
+            'memberships'
         ));
     }
 }

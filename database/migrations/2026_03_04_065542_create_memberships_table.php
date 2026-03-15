@@ -25,12 +25,14 @@ return new class extends Migration
                   ->cascadeOnDelete();
 
             // relasi personal trainer
-            $table->foreignId('personal_trainer_id')
-                  ->constrained('personal_trainers')
-                  ->cascadeOnDelete();
+           $table->foreignId('personal_trainer_id')
+                 ->nullable()
+                 ->constrained('personal_trainers')
+                 ->nullOnDelete();
 
             // tanggal membership
             $table->date('tanggal_mulai');
+            $table->date('tanggal_akhir')->nullable();
 
             // sisa kunjungan
             $table->integer('sisa_kunjungan')->nullable();

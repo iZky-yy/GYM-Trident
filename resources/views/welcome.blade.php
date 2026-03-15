@@ -108,25 +108,31 @@
             <h2>PERSONAL TRAINERS</h2>
             <div class="trainer-grid">
                 <div class="trainer-card">
-                    <div class="trainer-placeholder"></div>
-                    <h3>Trainer Template</h3>
-                    <p>Specialist Area</p>
+                    <div class="trainer-placeholder">
+                        <img src="{{asset('images/aderai.png')}}" alt="">
+                    </div>
+                    <h3>Ade Rai</h3>
+                    <p>Body Workout Specialist</p>
                     <div class="rating">★★★★★</div>
                     <a href="#" class="btn btn-primary">Book Session</a>
                 </div>
 
                 <div class="trainer-card">
-                    <div class="trainer-placeholder"></div>
-                    <h3>Trainer Template</h3>
-                    <p>Specialist Area</p>
+                    <div class="trainer-placeholder">
+                        <img src="{{asset('images/chrisputra.png')}}" alt="">
+                    </div>
+                    <h3>Chris Putra</h3>
+                    <p>Body Workout Specialist</p>
                     <div class="rating">★★★★★</div>
                     <a href="#" class="btn btn-primary">Book Session</a>
                 </div>
 
                 <div class="trainer-card">
-                    <div class="trainer-placeholder"></div>
-                    <h3>Trainer Template</h3>
-                    <p>Specialist Area</p>
+                    <div class="trainer-placeholder">
+                        <img src="{{asset('images/bobbyida.png')}}" alt="">
+                    </div>
+                    <h3>Bobby Ida</h3>
+                    <p>Body Workout Specialist</p>
                     <div class="rating">★★★★★</div>
                     <a href="#" class="btn btn-primary">Book Session</a>
                 </div>
@@ -136,27 +142,27 @@
 
     <section id="pricing" class="pricing">
         <div class="container">
-            <h2>PRICING PLAN</h2>
+            <h2>PRIC</h2>
             <div class="price-grid">
                 <div class="price-card">
-                    <h3>Basic</h3>
-                    <h1>$29</h1>
+                    <h3>Trident GYM</h3>
+                    <h1>Rp300.000</h1>
                     <p>Gym Access</p>
-                    <p>1 Trainer Session</p>
+                    <p>1 BULAN</p>
                 </div>
 
                 <div class="price-card highlight">
-                    <h3>Pro</h3>
-                    <h1>$59</h1>
-                    <p>5 Trainer Sessions</p>
-                    <p>Diet Plan</p>
+                    <h3>Trident Maxxing</h3>
+                    <h1>Rp1.300.000</h1>
+                    <p>Full Class Access</p>
+                    <p>3 Bulan</p>
                 </div>
 
                 <div class="price-card">
-                    <h3>Elite</h3>
-                    <h1>$99</h1>
-                    <p>Unlimited Trainer</p>
-                    <p>Premium Access</p>
+                    <h3>Trident Zumba</h3>
+                    <h1>Rp350.000</h1>
+                    <p>Zumba Access</p>
+                    <p>1 Bulan</p>
                 </div>
             </div>
         </div>

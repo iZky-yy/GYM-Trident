@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="auth-wrapper">
         <div class="auth-card">
-            <h2 class="auth-title">Register <span>GT GYM</span></h2>
+            <h2 class="auth-title">Register <span>GYM TRIDENT</span></h2>
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="auth-group">

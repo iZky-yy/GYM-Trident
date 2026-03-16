@@ -16,8 +16,8 @@
 
         <p class="menu-label">Main Menu</p>
         <nav class="nav-menu">
-            <a href="{{ route('member.dashboard') }}" class="nav-item active">Dashboard</a>
-            <a href="{{ route('membership.index') }}" class="nav-item">Membership</a>
+            <a href="{{ route('pt.dashboard') }}" class="nav-item {{ request()->routeIs('pt.dashboard') ? 'active' : '' }}">Dashboard</a>
+            <a href="{{ route('membership.index') }}" class="nav-item {{ request()->routeIs('pt.dashboard') ? 'active' : '' }}">Membership</a>
             <a href="{{ route('members.index') }}" class="nav-item">Profile</a>
         </nav>
 

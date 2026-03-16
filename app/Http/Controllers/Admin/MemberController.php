@@ -52,7 +52,7 @@ class MemberController extends Controller
             'qrcodes/'.$qrName,
             QrCode::format('png')->size(300)->generate($user->qr_token)
         );
-        
+
         $user->update([
             'qr_code' => 'qrcodes/'.$qrName
         ]);
@@ -77,12 +77,12 @@ class MemberController extends Controller
     {
         $member = User::where('role', 'member')->findOrFail($id);
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $member->id,
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:users,email,' . $member->id,
             'password' => 'nullable|min:6',
-            'address' => 'required',
-            'birthday' => 'required',
-            'phone' => 'required',
+            'address' => 'nullable',
+            'birthday' => 'nullable',
+            'phone' => 'nullable',
         ]);
 
         $member->update([

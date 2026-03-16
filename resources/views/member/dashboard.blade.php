@@ -4,7 +4,7 @@
     <main class="content">
         <header class="top-header">
             <div class="welcome">
-                <h1>Welcome Back, <span>{{ Auth::user()->name }}</span></h1>
+                <h1>Welcome Back {{ Auth::user()->role }}, <span>{{ Auth::user()->name }}</span></h1>
                 <p>Here's what's happening today.</p>
             </div>
             <div class="user-profile">
@@ -20,33 +20,21 @@
             </div>
         </header>
 
-        {{-- <div class="stats-container">
-
+        <div class="stats-container">
             <div class="stat-box">
-                <p class="stat-label">TOTAL MEMBERS</p>
-                <h2 class="stat-value">{{ $totalMembers }}</h2>
-                <p class="stat-trend">Registered Members</p>
+                @foreach ($memberships as $key => $m)
+                    <p class="stat-label">MEMBERSHIP STATUS</p>
+                    <h2 class="stat-value">
+                        @if ($m->status == 'active')
+                            <span class="badge active">Active</span>
+                        @else
+                            <span class="badge expired">Expired</span>
+                        @endif
+                    </h2>
+                    <p class="stat-trend">{{ $m->paket->nama_paket }}</p>
+                @endforeach
             </div>
-
-            <div class="stat-box">
-                <p class="stat-label">ACTIVE TRAINERS</p>
-                <h2 class="stat-value">{{ $activeTrainers }}</h2>
-                <p class="stat-trend green">Personal Trainers</p>
-            </div>
-
-            <div class="stat-box">
-                <p class="stat-label">MONTHLY REVENUE</p>
-                <h2 class="stat-value">Rp0</h2>
-                <p class="stat-trend">Transaksi</p>
-            </div>
-
-            <div class="stat-box">
-                <p class="stat-label">ACTIVE SESSIONS</p>
-                <h2 class="stat-value">{{ $activeSessions }}</h2>
-                <p class="stat-trend green">Paket GYM</p>
-            </div>
-
-        </div> --}}
+        </div>
 
         <div class="table-section">
             <div class="table-header">

@@ -33,7 +33,7 @@ class PTController extends Controller
             'spesialisasi' => 'nullable',
             'tarif_per_sesi' => 'nullable|numeric'
         ]);
-    
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -41,25 +41,25 @@ class PTController extends Controller
             'role' => 'pt',
             'qr_token' => Str::uuid()
         ]);
-    
+
         // generate QR
         $qrName = 'user_'.$user->id.'.png';
-    
+
         Storage::disk('public')->put(
             'qrcodes/'.$qrName,
             QrCode::format('png')->size(300)->generate($user->qr_token)
         );
-    
+
         $user->update([
             'qr_code' => 'qrcodes/'.$qrName
         ]);
-    
+
         PersonalTrainer::create([
             'user_id' => $user->id,
             'spesialisasi' => $request->spesialisasi,
             'tarif_per_sesi' => $request->tarif_per_sesi
         ]);
-    
+
         return redirect()->route('personaltrainer.index')
                          ->with('success','PT berhasil ditambahkan');
     }
@@ -75,8 +75,8 @@ class PTController extends Controller
     $pt = PersonalTrainer::with('user')->findOrFail($id);
 
     $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users,email,' . $pt->user_id,
+        'name' => 'nullable|',
+        'email' => 'nullable||email|unique:users,email,' . $pt->user_id,
         'password' => 'nullable|min:6',
         'spesialisasi' => 'nullable',
         'tarif_per_sesi' => 'nullable|numeric'

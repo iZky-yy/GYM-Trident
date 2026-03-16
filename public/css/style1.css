@@ -40,10 +40,10 @@ body {
 
 .nav-item {
     text-decoration: none;
-    color: black;
-    background-color: #A3FF12;
+    color: #888;
+    background-color: #1a1a1a;
     padding: 12px 20px;
-    border-radius: 50px; /* Membuat tombol sangat bulat sesuai Figma */
+    border-radius: 50px;
     font-weight: 600;
     display: block;
     transition: 0.3s;
@@ -53,8 +53,9 @@ body {
     filter: brightness(0.8);
 }
 
-.nav-item:not(.active) {
-    background-color: #A3FF12; /* Sesuaikan jika ingin warna lain untuk inactive */
+.nav-item.active {
+    background-color: #A3FF12;
+    color: black;
 }
 
 .logout {

@@ -51,9 +51,9 @@ class PaketGymController extends Controller
     {
         $pakets = PaketGym::findOrFail($id);
         $request->validate([
-            'nama_paket' => 'required|string|max:255',
-            'durasi_hari' => 'required|integer',
-            'harga' => 'required|integer',
+            'nama_paket' => 'nullable|string|max:255',
+            'durasi_hari' => 'nullable|integer',
+            'harga' => 'nullable|integer',
         ]);
 
         $pakets->update($request->all());

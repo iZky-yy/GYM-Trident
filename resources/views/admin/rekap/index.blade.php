@@ -35,8 +35,8 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->address }}</td>
-                            <td>{{ $item->phone }}</td>
+                            <td>{{ $item->address ?? 'Belum di-set'}}</td>
+                            <td>{{ $item->phone ?? 'Belum di-set' }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->birthday)->format('d M Y') }}</td>
                         </tr>
                     @endforeach
@@ -103,6 +103,7 @@
                         <th>Paket</th>
                         <th>Personal Trainer</th>
                         <th>Tanggal Mulai</th>
+                        <th>Tanggal Akhir</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -112,11 +113,12 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $m->member->name }}</td>
                             <td>{{ $m->paket->nama_paket }}</td>
-                            <td>{{ $m->pt->user->name }}</td>
+                            <td>{{ $m->pt->user->name ?? 'Tanpa PT' }}</td>
                             <td>{{ $m->tanggal_mulai }}</td>
+                            <td>{{ $m->tanggal_akhir }}</td>
                             <td>
-                                @if ($m->status == 'aktif')
-                                    <span class="badge active">Aktif</span>
+                                @if ($m->status == 'active')
+                                    <span class="badge active">Active</span>
                                 @else
                                     <span class="badge expired">Expired</span>
                                 @endif

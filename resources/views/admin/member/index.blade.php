@@ -31,9 +31,9 @@ Member GYM
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->email }}</td>
-                    <td>{{ $item->address }}</td>
+                    <td>{{ $item->address ?? 'Belum di-set' }}</td>
                     <td>{{ \Carbon\Carbon::parse($item->birthday)->format('d M Y') }}</td>
-                    <td>{{ $item->phone }}</td>
+                    <td>{{ $item->phone ?? 'Belum di-set' }}</td>
                     <td>
                         <div class="action-group">
                             <a href="{{ route('member.edit', $item->id) }}" class="btn-action btn-edit">

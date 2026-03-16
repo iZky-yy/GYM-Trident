@@ -9,6 +9,7 @@ Tambah Paket GYM
         <h2 class="form-title">Tambah Paket GYM</h2>
         <form action="{{ route('paket.update', $pakets->id)}}" method="post" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="form-group">
                 <label>Paket GYM</label>
                 <input type="string" id="nama_paket" name="nama_paket" placeholder="Ex : Trident 1 Bulan" class="form-input" value="{{$pakets->nama_paket}}">
@@ -18,7 +19,7 @@ Tambah Paket GYM
             </div>
             <div class="form-group">
                 <label for="harga" class="form-label">Harga Paket</label>
-                    <input type="number" id="harga" name="harga" placeholder="Ex : 100.000" class="form-input" value="{{$pakets->harga}}}">
+                    <input type="number" id="harga" name="harga" placeholder="Ex : 100.000" class="form-input" value="{{$pakets->harga}}">
                 <div class="form-error">
                     @error('harga') {{ $message }} @enderror
                 </div>

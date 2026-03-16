@@ -4,7 +4,7 @@
     <main class="content">
         <header class="top-header">
             <div class="welcome">
-                <h1>Welcome Back, <span>{{ Auth::user()->name }}</span></h1>
+                <h1>Welcome Back {{ Auth::user()->role }}, <span>{{ Auth::user()->name }}</span></h1>
                 <p>Here's what's happening today.</p>
             </div>
             <div class="user-profile">

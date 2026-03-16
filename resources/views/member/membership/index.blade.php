@@ -33,7 +33,13 @@
                             <td>{{ $m->pt?->user?->name ?? 'Tanpa PT' }}</td>
                             <td>{{ $m->tanggal_mulai }}</td>
                             <td>{{ $m->tanggal_akhir }}</td>
-                            <td>{{ $m->status }}</td>
+                            <td>
+                                @if ($m->status == 'active')
+                                    <span class="badge active">Active</span>
+                                @else
+                                    <span class="badge expired">Expired</span>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

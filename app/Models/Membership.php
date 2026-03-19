@@ -39,6 +39,11 @@ class Membership extends Model
                 $membership->status = 'expired';
         }
         });
+        static::addGlobalScope('member', function ($query) {
+            if(auth()->check() && auth()->user()->role == 'member'){
+                $query->where('member_id', auth()->id());
+            }
+        });
     }
 
     public function member()
@@ -54,5 +59,14 @@ class Membership extends Model
     public function pt()
     {
         return $this->belongsTo(PersonalTrainer::class,'personal_trainer_id');
+    }
+    public function membership()
+    {
+        return $this->belongsTo(Membership::class);
+    }
+
+    public function sesi()
+    {
+        return $this->hasMany(SesiPt::class);
     }
 }

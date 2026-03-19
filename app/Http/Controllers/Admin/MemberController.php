@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+
 
 class MemberController extends Controller
 {
@@ -46,11 +50,17 @@ class MemberController extends Controller
             'qr_token' => Str::uuid(),
             'role' => 'member'
         ]);
+
         $qrName = 'user_'.$user->id.'.png';
+
+        $qr = new QrCode($user->qr_token);
+
+        $writer = new PngWriter();
+        $result = $writer->write($qr);
 
         Storage::disk('public')->put(
             'qrcodes/'.$qrName,
-            QrCode::format('png')->size(300)->generate($user->qr_token)
+            $result->getString()
         );
 
         $user->update([

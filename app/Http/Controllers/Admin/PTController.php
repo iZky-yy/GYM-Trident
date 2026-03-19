@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\PersonalTrainer;
 use Illuminate\Http\Request;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Support\Facades\Hash;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class PTController extends Controller
 {
@@ -24,7 +26,7 @@ class PTController extends Controller
         return view('admin.personaltrainer.create');
     }
 
-   public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -34,34 +36,52 @@ class PTController extends Controller
             'tarif_per_sesi' => 'nullable|numeric'
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'pt',
-            'qr_token' => Str::uuid()
-        ]);
+        DB::beginTransaction();
 
-        // generate QR
-        $qrName = 'user_'.$user->id.'.png';
+        try {
 
-        Storage::disk('public')->put(
-            'qrcodes/'.$qrName,
-            QrCode::format('png')->size(300)->generate($user->qr_token)
-        );
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'pt',
+                'qr_token' => Str::uuid()
+            ]);
 
-        $user->update([
-            'qr_code' => 'qrcodes/'.$qrName
-        ]);
+            // 🔥 QR GENERATE
+            $qrName = 'user_'.$user->id.'.png';
 
-        PersonalTrainer::create([
-            'user_id' => $user->id,
-            'spesialisasi' => $request->spesialisasi,
-            'tarif_per_sesi' => $request->tarif_per_sesi
-        ]);
+            $qr = new QrCode($user->qr_token);
+            $writer = new PngWriter();
+            $result = $writer->write($qr);
 
-        return redirect()->route('personaltrainer.index')
-                         ->with('success','PT berhasil ditambahkan');
+            Storage::disk('public')->put(
+                'qrcodes/'.$qrName,
+                $result->getString()
+            );
+
+            $user->update([
+                'qr_code' => 'qrcodes/'.$qrName
+            ]);
+
+            // 🔥 WAJIB TERJALAN
+            PersonalTrainer::create([
+                'user_id' => $user->id,
+                'spesialisasi' => $request->spesialisasi,
+                'tarif_per_sesi' => $request->tarif_per_sesi
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('personaltrainer.index')
+                ->with('success','PT berhasil ditambahkan');
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            dd($e->getMessage()); // 🔥 lihat error asli
+        }
     }
     public function edit($id)
     {

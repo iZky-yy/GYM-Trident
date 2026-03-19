@@ -9,15 +9,16 @@
         <h1 class="rekap-title">Rekap GYM</h1>
         <!-- FILTER TANGGAL -->
         <div class="filter-box">
-            <form method="GET" action="/recap" class="filter-form">
-                <input type="date" name="tgl_mulai" value="{{ old('tgl_mulai') }}" class="filter-input">
-                <input type="date" name="tgl_keluar" value="{{ old('tgl_keluar') }}" class="filter-input">
+            <form method="GET" action="/admin/rekap" class="filter-form">
+                <input type="date" name="tgl_mulai" value="{{ request('tgl_mulai') }}" class="filter-input">
+                <input type="date" name="tgl_selesai" value="{{ request('tgl_selesai') }}" class="filter-input">
                 <button type="submit" class="filter-btn">
                     Tampilkan Data
                 </button>
             </form>
         </div>
         <!-- MEMBER -->
+        @if($member->count())
         <div class="table-wrapper">
             <h2 class="section-title">Member GYM</h2>
             <table class="custom-table">
@@ -35,7 +36,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->address ?? 'Belum di-set'}}</td>
+                            <td>{{ $item->address ?? 'Belum di-set' }}</td>
                             <td>{{ $item->phone ?? 'Belum di-set' }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->birthday)->format('d M Y') }}</td>
                         </tr>
@@ -43,6 +44,7 @@
                 </tbody>
             </table>
         </div>
+        @endif
         <!-- PT -->
         <div class="table-wrapper">
             <h2 class="section-title">Personal Trainer</h2>
@@ -64,11 +66,8 @@
                             <td>Rp {{ number_format($pt->tarif_per_sesi) }}</td>
                         </tr>
                     @endforeach
-
                 </tbody>
-
             </table>
-
         </div>
         <!-- PAKET -->
         <div class="table-wrapper">
@@ -93,6 +92,7 @@
             </table>
         </div>
         <!-- MEMBERSHIP -->
+        @if ($memberships->count())
         <div class="table-wrapper">
             <h2 class="section-title">Membership</h2>
             <table class="custom-table">
@@ -128,5 +128,54 @@
                 </tbody>
             </table>
         </div>
+        @endif
+        <!-- TRANSAKSI -->
+        @if ($transaksi->count())
+        <div class="table-wrapper">
+            <div class="table-title">
+                <h2>Data Transaksi Member</h2>
+            </div>
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Member</th>
+                        <th>Paket</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Bukti</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($transaksi as $key=>$t)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $t->member->name }}</td>
+                            <td>{{ $t->paket->nama_paket }}</td>
+                            <td>Rp {{ number_format($t->total_bayar, 0, ',', '.') }}</td>
+                            <td>
+                                <span
+                                    class="badge
+                            {{ $t->status == 'approved' ? 'active' : '' }}
+                            {{ $t->status == 'rejected' || $t->status == 'expired' ? 'expired' : '' }}">
+                                    {{ $t->status }}
+                                </span>
+                            </td>
+                            <td>
+                                @if ($t->bukti_pembayaran)
+                                    <a href="{{ asset('storage/' . $t->bukti_pembayaran) }}" target="_blank"
+                                        class="btn-action btn-edit">
+                                        Lihat
+                                    </a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @endif
     </div>
 @endsection

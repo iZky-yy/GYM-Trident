@@ -9,10 +9,11 @@
         <div class="table-wrapper">
             <div class="table-title">
                 <h2>Langganan Membership</h2>
-                <a href="{{ route('membership.create') }}" class="btn-add">
+                <a href="{{ route('transaksi.create') }}" class="btn-add">
                     + Langganan
                 </a>
             </div>
+
             <table class="custom-table">
                 <thead>
                     <tr>
@@ -25,6 +26,7 @@
                         <th>Aksi</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     @foreach ($memberships as $key => $m)
                         <tr>
@@ -40,9 +42,22 @@
                                     <span class="badge expired">Expired</span>
                                 @endif
                             </td>
+                            <td>
+                                <div class="action-group">
+                                    <a href="{{ route('transaksi.index') }}" class="btn-action btn-edit">
+                                        Riwayat
+                                    </a>
+                                    @if ($m->status == 'expired')
+                                        <a href="{{ route('transaksi.create') }}" class="btn-action btn-delete">
+                                            Langganan Lagi
+                                        </a>
+                                    @endif
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
+
             </table>
         </div>
     </div>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('paket_id')->constrained('paket_gyms')->onDelete('cascade');
             $table->integer('total_bayar');
             $table->string('bukti_pembayaran')->nullable();
-            $table->enum('status',['pending','approved','rejected'])->default('pending');
+            $table->enum('status',['pending','approved','rejected','expired']);
             $table->foreignId('validated_by')->nullable()->constrained('users');
             $table->timestamp('validated_at')->nullable();
             $table->timestamps();

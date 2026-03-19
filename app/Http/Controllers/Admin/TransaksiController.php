@@ -3,30 +3,56 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Transaksi;
+use App\Models\Membership;
 
 class TransaksiController extends Controller
 {
+    public function index()
+    {
+        $transaksi = Transaksi::with('member','paket')
+            ->latest()
+            ->get();
+
+        return view('admin.transaksi.index', compact('transaksi'));
+    }
+
     public function approve($id)
-{
-    $trx = Transaksi::findOrFail($id);
+    {
+        $transaksi = Transaksi::findOrFail($id);
 
-    $trx->update([
-        'status'=>'approved',
-        'validated_by'=>auth()->id(),
-        'validated_at'=>now()
-    ]);
+        if ($transaksi->expired_at < now()) {
+            return back()->with('error', 'Transaksi sudah expired');
+        }
 
-    // Buat membership aktif
-    MemberPaket::create([
-        'member_id'=>$trx->member_id,
-        'paket_id'=>$trx->paket_id,
-        'tanggal_mulai'=>now(),
-        'tanggal_akhir'=>now()->addDays($trx->paket->durasi_hari),
-        'sisa_kunjungan'=>$trx->paket->max_kunjungan,
-        'status'=>'active'
-    ]);
+        $transaksi->update([
+            'status' => 'approved',
+            'validated_by' => auth()->id(),
+            'validated_at' => now()
+        ]);
 
-    return back()->with('success','Transaksi disetujui');
-}
+        // BUAT MEMBERSHIP
+        Membership::create([
+            'member_id' => $transaksi->member_id,
+            'paket_id' => $transaksi->paket_id,
+            'tanggal_mulai' => now(),
+            'tanggal_akhir' => now()->addMonth(),
+            'status' => 'active'
+        ]);
+
+        return back()->with('success', 'Transaksi disetujui');
+    }
+
+    public function reject($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+
+        $transaksi->update([
+            'status' => 'rejected',
+            'validated_by' => auth()->id(),
+            'validated_at' => now()
+        ]);
+
+        return back()->with('success', 'Transaksi ditolak');
+    }
 }

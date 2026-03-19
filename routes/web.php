@@ -20,6 +20,8 @@ use App\Http\Controllers\Admin\MembershipsController;
 // Member Controller
 use App\Http\Controllers\Member\MembershipController;
 use App\Http\Controllers\Member\MembersController;
+use App\Http\Controllers\Member\TransaksisController;
+
 
 
 
@@ -70,10 +72,10 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
 
     Route::get('/transaksi', [TransaksiController::class,'index'])
         ->name('admin.transaksi');
-
+    Route::post('transaksi/{id}/approve', [TransaksiController::class, 'approve'])->name('admin.transaksi.approve');
+    Route::post('transaksi/{id}/reject', [TransaksiController::class, 'reject'])->name('admin.transaksi.reject');
     Route::get('/rekap', [RekapController::class,'index'])
         ->name('admin.rekap');
-
     Route::get('/membership', [MembershipsController::class,'index'])
         ->name('admin.membership');
 
@@ -102,6 +104,8 @@ Route::middleware(['auth','role:member'])->prefix('member')->group(function(){
         ->name('member.dashboard');
         Route::resource('membership', MembershipController::class);
         Route::resource('members', MembersController::class);
+        Route::resource('transaksi', TransaksisController::class);
+        Route::post('transaksi/{id}/upload', [TransaksisController::class, 'uploadBukti'])->name('member.transaksi.upload');
 
 });
 

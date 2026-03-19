@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('images/logo.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo.png') }}">
     <title>GYM TRIDENT ADMIN</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style1.css') }}">
@@ -18,7 +18,8 @@
 
         <p class="menu-label">Main Menu</p>
         <nav class="nav-menu">
-            <a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <a href="{{ route('admin.dashboard') }}"
+                class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     viewBox="0 0 24 24">
                     <path
@@ -45,18 +46,29 @@
                 </svg>
                 Member
             </a>
-            <a href="{{ route('personaltrainer.index') }}" class="nav-item {{ request()->routeIs('personaltrainer.*') ? 'active' : '' }}">
+            <a href="{{ route('personaltrainer.index') }}"
+                class="nav-item {{ request()->routeIs('personaltrainer.*') ? 'active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     viewBox="0 0 24 24">
                     <path d="M12 2a2 2 0 1 0 0 4 2 2 0 1 0 0-4M4 9h5v13h2v-7h2v7h2V9h5V7H4z"></path>
                 </svg>
                 Personal Trainer
             </a>
+            <a href="{{ route('admin.transaksi') }}"
+                class="nav-item {{ request()->routeIs('admin.transaksi') ? 'active' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M21 11h-3V5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v13c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-6c0-.55-.45-1-1-1M5 19c-.55 0-1-.45-1-1V5h12v13a3 3 0 0 0 .17 1zm15-1c0 .55-.45 1-1 1s-1-.45-1-1v-5h2z">
+                    </path>
+                    <path d="M6 7h8v2H6zm0 4h8v2H6zm5 4h3v2h-3z"></path>
+                </svg>
+                Transaksi
+            </a>
             <a href="{{ route('admin.rekap') }}"
                 class="nav-item {{ request()->routeIs('admin.rekap') ? 'active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     viewBox="0 0 24 24">
-                    <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
                     <path d="M8 6h9v2H8z"></path>
                     <path
                         d="M20 2H6C4.35 2 3 3.35 3 5v14c0 1.65 1.35 3 3 3h15v-2H6c-.55 0-1-.45-1-1s.45-1 1-1h14c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1m-6 14H6c-.35 0-.69.07-1 .18V5c0-.55.45-1 1-1h13v12z">

@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    color: white;
+}
+
+/* CONTENT */
+.content {
+    margin-left: 280px;
+    padding: 40px 60px;
+}
+
+/* HEADER */
+.header-text h1 {
+    font-size: 26px;
+}
+
+.header-text p {
+    color: #888;
+    margin-bottom: 30px;
+}
+
+/* CARD */
+.identity-card {
+    max-width: 900px;
+    background: #2c2c2c;
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+}
+
+.banner-strip {
+    height: 80px;
+    background: #3d3d3d;
+}
+
+.identity-content {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin-top: -40px;
+}
+
+.profile-pic {
+    width: 90px;
+    height: 90px;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pic-placeholder {
+    width: 70px;
+    height: 70px;
+    background: #D6A4A4;
+    border-radius: 10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:black;
+    font-weight:bold;
+}
+
+.profile-name {
+    margin-left: 20px;
+}
+
+.profile-name p {
+    color: #A3FF12;
+}
+
+/* FORM BOX */
+.main-form-box {
+    max-width: 900px;
+    background: #2c2c2c;
+    padding: 30px;
+    border-radius: 0 0 15px 15px;
+}
+
+/* TITLE */
+.form-title {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 8px;
+}
+
+/* GRID */
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 40px;
+}
+
+/* INPUT */
+.field label {
+    font-size: 13px;
+}
+
+.field input {
+    width: 100%;
+    background: #000;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    color: white;
+}
+
+/* BUTTON */
+.btn-submit {
+    margin-top: 20px;
+    background: #A3FF12;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background: red;
+    padding: 10px;
+    border: none;
+    color: white;
+    border-radius: 6px;
+}
+.qr-box{
+    margin-left:auto;
+    text-align:center;
+}
+
+.qr-img{
+    width:90px;
+    background:white;
+    padding:5px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.qr-img:hover{
+    transform:scale(1.1);
+}
+
+/* MODAL FULLSCREEN */
+.qr-modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.qr-modal img{
+    width:300px;
+}

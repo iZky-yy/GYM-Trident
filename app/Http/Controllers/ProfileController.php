@@ -6,21 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+
 
 class ProfileController extends Controller
 {
 
-    public function index()
+   public function index()
     {
-        $user = Auth::user();
+        $user = auth()->user();
 
-        if ($user->role == 'admin') {
-            return view('admin.profile');
-        }
-        if ($user->role == 'pt') {
-            return view('pt.profile');
-        }
-        return view('member.profile');
+        $qr = new QrCode($user->qr_token);
+        $writer = new PngWriter();
+        $result = $writer->write($qr);
+
+        $qrBase64 = base64_encode($result->getString());
+
+        return view('profile.index', compact('user','qrBase64'));
     }
 
     // UPDATE PROFILE

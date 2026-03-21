@@ -87,6 +87,14 @@
                 </svg>
                 Rekap
             </a>
+            <a href="{{ route('absensi.index') }}"
+                class="nav-item {{ request()->routeIs('absensi.index') ? 'active' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <path d="M9 5V3H3v6h2V5zm12 4V3h-6v2h4v4zm-2 10h-4v2h6v-6h-2zM5 15H3v6h6v-2H5zm-3-4h20v2H2z"></path>
+                </svg>
+                Absensi
+            </a>
         </nav>
 
         <form method="POST" action="{{ route('logout') }}">

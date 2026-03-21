@@ -16,8 +16,8 @@ class ProfileController extends Controller
    public function index()
     {
         $user = auth()->user();
-
-        $qr = new QrCode($user->qr_token);
+        $qrUrl = url('/scan-qr/'.$user->qr_token);
+        $qr = new QrCode($qrUrl);
         $writer = new PngWriter();
         $result = $writer->write($qr);
 

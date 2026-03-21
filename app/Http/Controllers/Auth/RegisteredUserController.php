@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -45,17 +47,21 @@ class RegisteredUserController extends Controller
         ]);
 
         // Generate QR
-        $qrName = 'user_'.$user->id.'.svg';
+         $qrName = 'user_'.$user->id.'.png';
+
+        $qr = new QrCode($user->qr_token);
+
+        $writer = new PngWriter();
+        $result = $writer->write($qr);
 
         Storage::disk('public')->put(
             'qrcodes/'.$qrName,
-            QrCode::format('svg')->size(300)->generate(url('/scan/'.$user->qr_token))
+            $result->getString()
         );
 
         $user->update([
             'qr_code' => 'qrcodes/'.$qrName
         ]);
-
         event(new Registered($user));
 
         Auth::login($user);

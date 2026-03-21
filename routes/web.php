@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\RekapController;
 use App\Http\Controllers\Admin\MembershipsController;
 use App\Http\Controllers\Admin\SesiController;
+use App\Http\Controllers\Admin\AbsensisController;
 
 // Member Controller
 use App\Http\Controllers\Member\MembershipController;
@@ -84,6 +85,8 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
     Route::get('/membership', [MembershipsController::class,'index'])
         ->name('admin.membership');
     Route::resource('sesi', SesiController::class);
+    Route::get('/absensi', [AbsensisController::class,'index'])
+        ->name('absensi.index');
 
 });
 

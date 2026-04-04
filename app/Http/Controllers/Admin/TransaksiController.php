@@ -35,6 +35,7 @@ class TransaksiController extends Controller
         Membership::create([
             'member_id' => $transaksi->member_id,
             'paket_id' => $transaksi->paket_id,
+            'personal_trainer_id' => $transaksi->personal_trainer_id,
             'tanggal_mulai' => now(),
             'tanggal_akhir' => now()->addMonth(),
             'status' => 'active'

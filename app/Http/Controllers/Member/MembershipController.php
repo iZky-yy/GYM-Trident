@@ -34,25 +34,24 @@ class MembershipController extends Controller
         ]);
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'paket_id' => 'required|exists:paket_gyms,id',
-            'personal_trainer_id' => 'nullable|exists:personal_trainers,id'
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'paket_id' => 'required|exists:paket_gyms,id',
+        'personal_trainer_id' => 'nullable|exists:personal_trainers,id'
+    ]);
 
-        dd($request->all());
-        $membership = Membership::create([
-            'member_id' => auth()->id(),
-            'paket_id' => $request->paket_id,
-            'personal_trainer_id' => $request->personal_trainer_id ?: null,
-            'tanggal_mulai' => now(),
-            'status' => 'active'
-        ]);
 
-        return redirect()->route('membership.index')
-            ->with('success','Membership berhasil dibuat');
-    }
+    $membership = Membership::create([
+        'member_id'           => auth()->id(),
+        'paket_id'            => $request->paket_id,
+        'personal_trainer_id' => $request->personal_trainer_id ?: null,
+        'status'              => 'active'
+    ]);
+
+    return redirect()->route('membership.index')
+        ->with('success', 'Membership berhasil dibuat');
+}
 
     public function edit($id)
     {

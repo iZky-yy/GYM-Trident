@@ -24,8 +24,8 @@
                 </div>
                 <div class="form-group">
                     <label>Personal Trainer</label>
-                    <select name="personal_trainer_id" class="form-input" required>
-                        <option value="">-- Pilih PT (Opsional) --</option>
+                    <select name="personal_trainer_id" class="form-input">
+                        <option value="">Tanpa Personal Trainer</option>
                         @foreach ($pts as $pt)
                             <option value="{{ $pt->id }}">
                                 {{ $pt->user->name }}

@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('member_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('paket_id')->constrained('paket_gyms')->onDelete('cascade');
+            $table->foreignId('personal_trainer_id')
+            ->nullable()
+            ->constrained('personal_trainers')
+            ->nullOnDelete();
             $table->integer('total_bayar');
             $table->string('bukti_pembayaran')->nullable();
             $table->enum('status',['pending','approved','rejected','expired']);
@@ -29,6 +33,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaksis');
+        Schema::table('transaksis', function (Blueprint $table) {
+        $table->dropForeign(['personal_trainer_id']);
+        $table->dropColumn('personal_trainer_id');
+    });
     }
 };

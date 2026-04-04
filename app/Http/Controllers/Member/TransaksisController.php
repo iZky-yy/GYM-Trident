@@ -36,6 +36,7 @@ class TransaksisController extends Controller
         Transaksi::create([
             'member_id' => auth()->id(),
             'paket_id' => $pakets->id,
+            'personal_trainer_id' => $request->personal_trainer_id ?: null,
             'total_bayar' => $pakets->harga,
             'status' => 'pending',
             'expired_at' => now()->addHours(24)

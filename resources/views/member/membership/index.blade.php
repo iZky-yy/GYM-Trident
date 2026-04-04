@@ -32,7 +32,7 @@
                         <tr>
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $m->paket->nama_paket }}</td>
-                            <td>{{ $m->pt?->user?->name ?? 'Tanpa PT' }}</td>
+                            <td>{{ $m->pt ? $m->pt->user->name : 'Tanpa PT' }}</td>
                             <td>{{ $m->tanggal_mulai }}</td>
                             <td>{{ $m->tanggal_akhir }}</td>
                             <td>

@@ -36,7 +36,7 @@
 
             <div class="stat-box">
                 <p class="stat-label">MONTHLY REVENUE</p>
-                <h2 class="stat-value">Rp0</h2>
+                <h2 class="stat-value">Rp{{ number_format($totalRevenue, 0, ',', '.') }}</h2>
                 <p class="stat-trend">Transaksi</p>
             </div>
 

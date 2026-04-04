@@ -14,32 +14,18 @@ return new class extends Migration
         Schema::create('memberships', function (Blueprint $table) {
             $table->id();
 
-            // relasi member
-            $table->foreignId('member_id')
-                  ->constrained('users')
-                  ->cascadeOnDelete();
+            $table->foreignId('member_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('paket_id')->constrained('paket_gyms')->cascadeOnDelete();
 
-            // relasi paket gym
-            $table->foreignId('paket_id')
-                  ->constrained('paket_gyms')
-                  ->cascadeOnDelete();
+            $table->foreignId('personal_trainer_id')
+                ->nullable()
+                ->constrained('personal_trainers')
+                ->nullOnDelete();
 
-            // relasi personal trainer
-           $table->foreignId('personal_trainer_id')
-                 ->nullable()
-                 ->constrained('personal_trainers')
-                 ->nullOnDelete();
-
-            // tanggal membership
             $table->date('tanggal_mulai');
             $table->date('tanggal_akhir')->nullable();
 
-            // sisa kunjungan
-            $table->integer('sisa_kunjungan')->nullable();
-
-            // status membership
-            $table->enum('status', ['active', 'expired'])
-                  ->default('active');
+            $table->enum('status', ['active','expired'])->default('active');
 
             $table->timestamps();
         });

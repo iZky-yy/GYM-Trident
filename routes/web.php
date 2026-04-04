@@ -16,17 +16,15 @@ use App\Http\Controllers\Admin\PTController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\RekapController;
 use App\Http\Controllers\Admin\MembershipsController;
-use App\Http\Controllers\Admin\SesiController;
 use App\Http\Controllers\Admin\AbsensisController;
 
 // Member Controller
 use App\Http\Controllers\Member\MembershipController;
 use App\Http\Controllers\Member\MembersController;
 use App\Http\Controllers\Member\TransaksisController;
-use App\Http\Controllers\Member\SesisController;
 
 // PT Controller
-use App\Http\Controllers\PT\SesissController;
+use App\Http\Controllers\PT\JadwalController;
 
 
 
@@ -84,7 +82,6 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
         ->name('admin.rekap');
     Route::get('/membership', [MembershipsController::class,'index'])
         ->name('admin.membership');
-    Route::resource('sesi', SesiController::class);
     Route::get('/absensi', [AbsensisController::class,'index'])
         ->name('absensi.index');
 
@@ -95,12 +92,10 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
 | PT ROUTES
 */
 
-Route::middleware(['auth','role:pt'])->prefix('pt')->group(function(){
-
+Route::middleware(['auth','role:pt'])->prefix('pt')->name('pt.')->group(function(){
     Route::get('/dashboard', [PTDashboardController::class,'index'])
-        ->name('pt.dashboard');
-    Route::resource('sesi', SesissController::class)->only([
-    'index','edit','update']);
+        ->name('dashboard');
+        Route::resource('jadwal', JadwalController::class);
 });
 
 
@@ -116,7 +111,6 @@ Route::middleware(['auth','role:member'])->prefix('member')->group(function(){
         Route::resource('members', MembersController::class);
         Route::resource('transaksi', TransaksisController::class);
         Route::post('transaksi/{id}/upload', [TransaksisController::class, 'uploadBukti'])->name('member.transaksi.upload');
-        Route::get('sesi', [SesisController::class, 'index'])->name('member.sesi.index');
 });
 
 

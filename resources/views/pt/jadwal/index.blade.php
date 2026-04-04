@@ -1,42 +1,36 @@
-@extends('layouts.admin')
+@extends('layouts.pt')
 
 @section('title')
-    Member GYM
+    Jadwal Training
 @endsection
 
 @section('content')
     <div class="content">
         <div class="table-wrapper">
             <div class="table-title">
-                <h2>Data Member GYM</h2>
-                <a href="{{ route('member.create') }}" class="btn-add">
-                    + Tambah Member
+                <h2>Data Jadwal</h2>
+                <a href="{{ route('pt.jadwal.create') }}" class="btn-add">
+                    + Tambah Jadwal
                 </a>
             </div>
             <table class="custom-table">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Alamat</th>
-                        <th>Tanggal Lahir</th>
-                        <th>Telepon</th>
-                        <th>Aksi</th>
+                        <th scope="col">No</th>
+                        <th scope="col">Hari</th>
+                        <th scope="col">Jam</th>
+                        <th scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($member as $item)
+                    @foreach ($jadwal as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->email }}</td>
-                            <td>{{ $item->address ?? 'Belum di-set' }}</td>
-                            <td>{{ $item->birthday ? \Carbon\Carbon::parse($item->birthday)->format('d M Y') : '-' }}</td>
-                            <td>{{ $item->phone ?? 'Belum di-set' }}</td>
+                            <td>{{ $item->hari }}</td>
+                            <td>{{ $item->jam }}</td>
                             <td>
                                 <div class="action-group">
-                                    <a href="{{ route('member.edit', $item->id) }}" class="btn-action btn-edit">
+                                    <a href="{{ route('pt.jadwal.edit', $item->id) }}" class="btn-action btn-edit">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" viewBox="0 0 24 24">
                                             <path
@@ -44,7 +38,7 @@
                                             </path>
                                         </svg>
                                     </a>
-                                    <form action="{{ route('member.destroy', $item->id) }}" method="POST">
+                                    <form action="{{ route('pt.jadwal.destroy', $item->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn-action btn-delete">

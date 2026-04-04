@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('personal_trainers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
+
             $table->string('spesialisasi')->nullable();
             $table->integer('tarif_per_sesi')->nullable();
+
             $table->timestamps();
         });
     }

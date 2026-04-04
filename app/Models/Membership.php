@@ -15,58 +15,36 @@ class Membership extends Model
         'personal_trainer_id',
         'tanggal_mulai',
         'tanggal_akhir',
-        'sisa_kunjungan',
         'status'
     ];
 
-    protected static function boot()
+    protected static function booted()
     {
-        parent::boot();
-
         static::creating(function ($membership) {
 
-            if (!$membership->tanggal_mulai) {
-                $membership->tanggal_mulai = now();
-            }
+            $membership->tanggal_mulai = now();
 
             $paket = PaketGym::find($membership->paket_id);
 
             if ($paket) {
                 $membership->tanggal_akhir = now()->addDays($paket->durasi_hari);
             }
-
-            if ($membership->tanggal_akhir < now()) {
-                $membership->status = 'expired';
-        }
-        });
-        static::addGlobalScope('member', function ($query) {
-            if(auth()->check() && auth()->user()->role == 'member'){
-                $query->where('member_id', auth()->id());
-            }
         });
     }
 
+    // RELATION
     public function member()
     {
-        return $this->belongsTo(User::class,'member_id');
+        return $this->belongsTo(User::class, 'member_id');
     }
 
     public function paket()
     {
-        return $this->belongsTo(PaketGym::class,'paket_id');
+        return $this->belongsTo(PaketGym::class, 'paket_id');
     }
 
     public function pt()
     {
-        return $this->belongsTo(PersonalTrainer::class,'personal_trainer_id');
-    }
-    public function membership()
-    {
-        return $this->belongsTo(Membership::class);
-    }
-
-    public function sesi()
-    {
-        return $this->hasMany(SesiPt::class);
+        return $this->belongsTo(PersonalTrainer::class, 'personal_trainer_id');
     }
 }

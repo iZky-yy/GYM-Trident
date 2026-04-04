@@ -19,7 +19,8 @@ class MembershipController extends Controller
             'paket',
             'pt.user'
         ])
-        ->where('member_id', Auth::id())
+        ->where('member_id', auth()->id())
+        ->latest()
         ->get();
 
         return view('member.membership.index', compact('memberships'));
@@ -27,41 +28,30 @@ class MembershipController extends Controller
 
     public function create()
     {
-        $pakets = PaketGym::all();
-        $pts = PersonalTrainer::with('user')->get();
-
-        return view('member.membership.create', compact('pakets','pts'));
+        return view('member.membership.create', [
+            'pakets' => PaketGym::all(),
+            'pts' => PersonalTrainer::with('user')->get()
+        ]);
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'paket_id' => 'required|exists:paket_gyms,id',
+            'personal_trainer_id' => 'nullable|exists:personal_trainers,id'
+        ]);
+
+        dd($request->all());
         $membership = Membership::create([
             'member_id' => auth()->id(),
             'paket_id' => $request->paket_id,
-            'personal_trainer_id' => $request->personal_trainer_id,
+            'personal_trainer_id' => $request->personal_trainer_id ?: null,
             'tanggal_mulai' => now(),
             'status' => 'active'
         ]);
 
-        // 🔥 AUTO BUAT SESI
-        if ($membership->personal_trainer_id) {
-
-            $pt = PersonalTrainer::find($membership->personal_trainer_id);
-
-            for ($i = 1; $i <= 5; $i++) {
-
-                SesiPt::create([
-                    'member_id' => $membership->member_id,
-                    'pt_id' => $pt->user_id,
-                    'tanggal' => now()->addDays($i),
-                    'jam' => '10:00:00',
-                    'status' => 'scheduled'
-                ]);
-            }
-        }
-
         return redirect()->route('membership.index')
-            ->with('success','Membership & Jadwal berhasil dibuat');
+            ->with('success','Membership berhasil dibuat');
     }
 
     public function edit($id)
@@ -89,10 +79,8 @@ class MembershipController extends Controller
 
     public function destroy($id)
     {
-        $membership = Membership::findOrFail($id);
-        $membership->delete();
+        Membership::findOrFail($id)->delete();
 
-        return redirect()->route('membership.index')
-            ->with('success','Membership berhasil dihapus');
+        return back()->with('success','Membership dihapus');
     }
 }

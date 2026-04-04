@@ -76,4 +76,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(MemberPaket::class, 'pt_id');
     }
+    public function personalTrainer()
+    {
+        return $this->hasOne(PersonalTrainer::class);
+    }
 }

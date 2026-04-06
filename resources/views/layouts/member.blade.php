@@ -47,8 +47,8 @@
                 </svg>
                 Transaksi
             </a>
-            {{-- <a href="{{ route('jadwal.index') }}"
-                class="nav-item {{ request()->routeIs('jadwal.*') ? 'active' : '' }}">
+            <a href="{{ route('member.jadwal.index') }}"
+                class="nav-item {{ request()->routeIs('member.jadwal.*') ? 'active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     viewBox="0 0 24 24">
                     <path
@@ -57,7 +57,7 @@
                     <path d="M12 13h5v5h-5z"></path>
                 </svg>
                 Jadwal
-            </a> --}}
+            </a>
         </nav>
 
         <form method="POST" action="{{ route('logout') }}">

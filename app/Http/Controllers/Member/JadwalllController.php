@@ -3,14 +3,28 @@
 namespace App\Http\Controllers\member;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Jadwal;
+use App\Models\Membership;
+use Illuminate\Support\Facades\Auth;
 
 class JadwalllController extends Controller
 {
-    public function jadwalByPT($pt_id)
+    public function index()
     {
-        $jadwal = JadwalPt::where('user_id', $pt_id)->get();
+        $membership = Membership::with('pt.user')
+            ->where('member_id', Auth::id())
+            ->where('status', 'active')
+            ->latest()
+            ->first();
 
-        return view('member.jadwal.index', compact('jadwal'));
+        $jadwal = collect();
+        $pt = null;
+
+        if ($membership && $membership->pt) {
+            $pt = $membership->pt;
+            $jadwal = Jadwal::where('user_id', $pt->user_id)->get();  
+        }
+
+        return view('member.jadwal.index', compact('jadwal', 'pt', 'membership'));
     }
 }

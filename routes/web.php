@@ -17,14 +17,17 @@ use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\RekapController;
 use App\Http\Controllers\Admin\MembershipsController;
 use App\Http\Controllers\Admin\AbsensisController;
+use App\Http\Controllers\Admin\JadwallController;
 
 // Member Controller
 use App\Http\Controllers\Member\MembershipController;
 use App\Http\Controllers\Member\MembersController;
 use App\Http\Controllers\Member\TransaksisController;
+use App\Http\Controllers\Member\JadwalllController;
 
 // PT Controller
 use App\Http\Controllers\PT\JadwalController;
+use App\Http\Controllers\PT\MemberssController;
 
 
 
@@ -84,6 +87,9 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
         ->name('admin.membership');
     Route::get('/absensi', [AbsensisController::class,'index'])
         ->name('absensi.index');
+    Route::get('jadwal', [JadwallController::class, 'index'])->name('admin.jadwal.index');
+    Route::get('jadwal/{id}/edit', [JadwallController::class, 'edit'])->name('admin.jadwal.edit');
+    Route::put('jadwal/{id}', [JadwallController::class, 'update'])->name('admin.jadwal.update');
 
 });
 
@@ -95,7 +101,8 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
 Route::middleware(['auth','role:pt'])->prefix('pt')->name('pt.')->group(function(){
     Route::get('/dashboard', [PTDashboardController::class,'index'])
         ->name('dashboard');
-        Route::resource('jadwal', JadwalController::class);
+        Route::get('jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+        Route::get('members', [MemberssController::class, 'index'])->name('members.index');
 });
 
 
@@ -111,6 +118,7 @@ Route::middleware(['auth','role:member'])->prefix('member')->group(function(){
         Route::resource('members', MembersController::class);
         Route::resource('transaksi', TransaksisController::class);
         Route::post('transaksi/{id}/upload', [TransaksisController::class, 'uploadBukti'])->name('member.transaksi.upload');
+        Route::get('jadwal', [JadwalllController::class, 'index'])->name('member.jadwal.index');
 });
 
 

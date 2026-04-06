@@ -58,11 +58,7 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $m->member->name }}</td>
                             <td>{{ $m->paket->nama_paket }}</td>
-                            <td>
-                                PT ID: {{ $m->personal_trainer_id }} <br>
-                                PT : {{ $m->pt?->id }} <br>
-                                USER: {{ $m->pt?->user?->name ?? 'NULL' }}
-                            </td>
+                            <td>{{ $m->pt ? $m->pt->user->name : 'Tanpa PT'}}</td>
                             <td>{{ $m->tanggal_mulai }}</td>
                             <td>{{ $m->tanggal_akhir }}</td>
                             <td>

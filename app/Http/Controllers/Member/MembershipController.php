@@ -7,7 +7,6 @@ use App\Models\Membership;
 use App\Models\User;
 use App\Models\PaketGym;
 use App\Models\PersonalTrainer;
-use App\Models\SesiPt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

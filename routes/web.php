@@ -101,7 +101,7 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
 Route::middleware(['auth','role:pt'])->prefix('pt')->name('pt.')->group(function(){
     Route::get('/dashboard', [PTDashboardController::class,'index'])
         ->name('dashboard');
-        Route::get('jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+        Route::resource('jadwal', JadwalController::class);
         Route::get('members', [MemberssController::class, 'index'])->name('members.index');
 });
 

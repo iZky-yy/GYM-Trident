@@ -34,9 +34,15 @@
                                 </span>
                             </td>
                             <td>
-                                <a href="{{ route('transaksi.show', $item->id) }}" class="btn-action btn-edit">
-                                    Bayar
-                                </a>
+                                @if ($item->status == 'approved')
+                                    <a href="{{ route('transaksi.receipt', $item->id) }}" class="btn-action btn-edit">
+                                        Lihat Detail
+                                    </a>
+                                @else
+                                    <a href="{{ route('transaksi.show', $item->id) }}" class="btn-action btn-edit">
+                                        Bayar
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

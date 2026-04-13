@@ -118,6 +118,7 @@ Route::middleware(['auth','role:member'])->prefix('member')->group(function(){
         Route::resource('members', MembersController::class);
         Route::resource('transaksi', TransaksisController::class);
         Route::post('transaksi/{id}/upload', [TransaksisController::class, 'uploadBukti'])->name('member.transaksi.upload');
+        Route::get('transaksi/{id}/receipt', [TransaksisController::class, 'receipt'])->name('transaksi.receipt');
         Route::get('jadwal', [JadwalllController::class, 'index'])->name('member.jadwal.index');
 });
 

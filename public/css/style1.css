@@ -586,3 +586,130 @@ select.form-input:focus{
 .form-container button[type="submit"]:hover {
     box-shadow: 0 0 20px rgba(163, 255, 18, 0.5);
 }
+
+@media print {
+    /* Sembunyikan semua elemen layout */
+    nav, aside, header, footer,
+    .sidebar, .navbar, .topbar,
+    .receipt-actions,
+    [class*="menu"],
+    [class*="nav"],
+    [class*="sidebar"] {
+        display: none !important;
+    }
+
+    /* Reset body dan container */
+    body, .content, .main-content,
+    html, * {
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Hanya tampilkan struk */
+    .receipt-wrapper {
+        box-shadow: none !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        background: #fff !important;
+        color: #000 !important;
+        margin: 0 !important;
+        padding: 1rem !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+    }
+
+    .receipt-header h2,
+    .receipt-row .label,
+    .receipt-row .value,
+    .receipt-total,
+    .total-amount,
+    .receipt-footer,
+    .receipt-section h4,
+    .receipt-id { color: #000 !important; }
+    .total-amount { color: #2a7a3b !important; }
+    .receipt-divider { border-top-color: #000 !important; }
+    .receipt-divider.dashed { border-top-color: #555 !important; }
+}
+
+.receipt-wrapper {
+    max-width: 480px;
+    margin: 2rem auto;
+    background: #111;           /* hitam */
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    padding: 2rem 2.5rem;
+    font-family: 'Courier New', monospace;
+    color: #f0f0f0;             /* teks terang */
+}
+
+.receipt-header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.receipt-logo { font-size: 2rem; margin-bottom: 0.25rem; }
+.receipt-header h2 { font-size: 1.1rem; letter-spacing: 2px; margin: 0; color: #fff; }
+.receipt-id { color: #aaa; font-size: 0.85rem; margin: 4px 0; }
+
+.receipt-divider {
+    border: none;
+    border-top: 2px solid #555;
+    margin: 1rem 0;
+}
+.receipt-divider.dashed {
+    border-top: 1.5px dashed #444;
+}
+
+.receipt-section h4 {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+.receipt-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    gap: 1rem;
+}
+.receipt-row .label { color: #aaa; }
+.receipt-row .value { font-weight: 600; color: #f0f0f0; text-align: right; }
+
+.receipt-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #f0f0f0;
+}
+.total-amount { font-size: 1.2rem; color: #4ade80; }  /* hijau terang di dark mode */
+
+.receipt-footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+    margin: 0.5rem 0;
+}
+.receipt-footer p { margin: 2px 0; }
+
+.receipt-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.25rem;
+}
+.btn-print {
+    background: #4ade80;
+    color: #111;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}

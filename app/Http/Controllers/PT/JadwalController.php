@@ -57,12 +57,16 @@ class JadwalController extends Controller
         $jadwal = Jadwal::where('user_id', Auth::id())->findOrFail($id);
         $request->validate([
             'hari' => 'required|array',
-            'jam' => 'required',
+            'jam'  => 'required',
         ]);
-        $jadwal->update($request->only('hari','jam'));
+
+        $jadwal->update([
+            'hari' => implode(',', $request->hari),
+            'jam'  => $request->jam,
+        ]);
 
         return redirect()->route('pt.jadwal.index')
-            ->with('success','Jadwal berhasil diupdate');
+            ->with('success', 'Jadwal berhasil diupdate');
     }
 
 

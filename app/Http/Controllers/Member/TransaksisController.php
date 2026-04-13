@@ -11,6 +11,19 @@ use Illuminate\Support\Facades\Storage;
 
 class TransaksisController extends Controller
 {
+    public function receipt($id)
+    {
+        $transaksi = Transaksi::with(['paket', 'pt', 'pt.user'])
+        ->where('member_id', auth()->id())
+        ->findOrFail($id);
+
+        if ($transaksi->status !== 'approved') {
+            return redirect()->route('transaksi.show', $id);
+        }
+
+        return view('member.transaksis.receipt', compact('transaksi'));
+    }
+
     public function index()
     {
         $transaksi = Transaksi::with('paket')

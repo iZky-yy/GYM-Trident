@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\member;
+namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
 use App\Models\Jadwal;
@@ -12,19 +12,20 @@ class JadwalllController extends Controller
     public function index()
     {
         $membership = Membership::with('pt.user')
-            ->where('member_id', Auth::id())
-            ->where('status', 'active')
-            ->latest()
-            ->first();
+        ->where('member_id', Auth::id())
+        ->where('status', 'active')
+        ->whereNotNull('personal_trainer_id')
+        ->latest()
+        ->first();
 
-        $jadwal = collect();
-        $pt = null;
+    $jadwal = collect();
+    $pt = null;
 
-        if ($membership && $membership->pt) {
-            $pt = $membership->pt;
-            $jadwal = Jadwal::where('user_id', $pt->user_id)->get();  
-        }
+    if ($membership && $membership->pt) {
+        $pt = $membership->pt;
+        $jadwal = Jadwal::where('user_id', $pt->user_id)->get();
+    }
 
-        return view('member.jadwal.index', compact('jadwal', 'pt', 'membership'));
+    return view('member.jadwal.index', compact('jadwal', 'pt', 'membership'));
     }
 }

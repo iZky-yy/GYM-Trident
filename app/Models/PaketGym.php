@@ -12,8 +12,8 @@ class PaketGym extends Model
         'harga',
     ];
 
-    public function members()
+    public function memberships()
     {
-        return $this->hasMany(MemberPaket::class,'paket_id');
+        return $this->hasMany(Membership::class, 'paket_id');
     }
 }

@@ -20,7 +20,8 @@ class User extends Authenticatable
         'address',
         'birthday',
         'photo',
-        'qr_token'
+        'qr_token',
+        'qr_code',
     ];
 
     protected $hidden = [
@@ -28,34 +29,31 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'birthday' => 'date'
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password'          => 'hashed',
+        'birthday'          => 'date',
+    ];
 
-    /**
-     * Auto generate QR token saat user dibuat
-     */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::creating(function ($user) {
-            $user->qr_token = Str::uuid();
+        static::creating(function (User $user) {
+            $user->qr_token ??= Str::uuid()->toString();
         });
     }
 
-    // ======================
-    // RELATIONSHIPS
-    // ======================
-
     public function memberships()
     {
-        return $this->hasMany(MemberPaket::class, 'member_id');
+        return $this->hasMany(Membership::class, 'member_id');
+    }
+
+    public function activeMembership()
+    {
+        return $this->hasOne(Membership::class, 'member_id')
+            ->where('status', 'active')
+            ->latest();
     }
 
     public function transaksi()
@@ -67,17 +65,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Absensi::class);
     }
-    public function paketMembers()
-    {
-        return $this->hasMany(MemberPaket::class, 'member_id');
-    }
 
-    public function ptMembers()
-    {
-        return $this->hasMany(MemberPaket::class, 'pt_id');
-    }
     public function personalTrainer()
     {
         return $this->hasOne(PersonalTrainer::class);
+    }
+
+    public function isMember(): bool
+    {
+        return $this->role === 'member';
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 }

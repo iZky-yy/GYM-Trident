@@ -1,60 +1,66 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Models\Membership;
-use App\Models\User;
 use App\Models\PaketGym;
 use App\Models\PersonalTrainer;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MembershipsController extends Controller
 {
-
     public function index()
     {
-        $memberships = Membership::with([
-            'member',
-            'paket',
-            'pt.user'
-        ])->get();
+        $memberships = Membership::with(['member', 'paket', 'pt.user'])->latest()->get();
 
         return view('admin.membership.index', compact('memberships'));
     }
 
-    public function edit($id)
+    public function edit(string $id)
     {
-        $membership = Membership::findOrFail($id);
-        $members = User::all();
-        $pakets = PaketGym::all();
-        $pts = PersonalTrainer::with('user')->get();
+        $membership = Membership::with(['member', 'paket'])->findOrFail($id);
+        $members    = User::where('role', 'member')->get();
+        $pakets     = PaketGym::all();
+        $pts        = PersonalTrainer::with('user')->get();
 
-        return view('admin.membership.edit', compact('membership','members','pakets','pts'));
+        return view('admin.membership.edit', compact('membership', 'members', 'pakets', 'pts'));
     }
 
-
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
-        $membership = Membership::findOrFail($id);
+        $request->validate([
+            'paket_id'            => 'required|exists:paket_gyms,id',
+            'personal_trainer_id' => 'nullable|exists:personal_trainers,id',
+            'tanggal_mulai'       => 'required|date',
+            'status'              => 'required|in:active,expired',
+        ]);
+
+        $membership   = Membership::findOrFail($id);
+        $paket        = PaketGym::findOrFail($request->paket_id);
+        $tanggalMulai = Carbon::parse($request->tanggal_mulai);
+        $tanggalAkhir = $tanggalMulai->copy()->addDays($paket->durasi_hari);
 
         $membership->update([
-            'paket_id' => $request->paket_id,
+            'paket_id'            => $request->paket_id,
             'personal_trainer_id' => $request->personal_trainer_id,
-            'tanggal_mulai' => $request->tanggal_mulai,
-            'status' => $request->status
+            'tanggal_mulai'       => $tanggalMulai,
+            'tanggal_akhir'       => $tanggalAkhir,
+            'status'              => $request->status,
         ]);
 
         return redirect()->route('membership.index')
-            ->with('success','Membership berhasil diupdate');
+            ->with('success', 'Membership berhasil diupdate');
     }
 
-
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $membership = Membership::findOrFail($id);
         $membership->delete();
 
         return redirect()->route('membership.index')
-            ->with('success','Membership berhasil dihapus');
+            ->with('success', 'Membership berhasil dihapus');
     }
 }

@@ -14,7 +14,12 @@
                 </div>
                 <a href="{{ route('profile.index') }}">
                     <div class="user-avatar">
-                        {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                        @if (Auth::user()->photo)
+                            <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="foto profil"
+                                style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">
+                        @else
+                            {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                        @endif
                     </div>
                 </a>
             </div>
@@ -58,7 +63,7 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $m->member->name }}</td>
                             <td>{{ $m->paket->nama_paket }}</td>
-                            <td>{{ $m->pt ? $m->pt->user->name : 'Tanpa PT'}}</td>
+                            <td>{{ $m->pt ? $m->pt->user->name : 'Tanpa PT' }}</td>
                             <td>{{ $m->tanggal_mulai }}</td>
                             <td>{{ $m->tanggal_akhir }}</td>
                             <td>

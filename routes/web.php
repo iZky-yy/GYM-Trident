@@ -29,6 +29,7 @@ use App\Http\Controllers\Member\JadwalllController;
 use App\Http\Controllers\PT\JadwalController;
 use App\Http\Controllers\PT\MemberssController;
 
+use App\Http\Controllers\ExerciseController;
 
 
 
@@ -122,7 +123,11 @@ Route::middleware(['auth','role:member'])->prefix('member')->group(function(){
         Route::get('jadwal', [JadwalllController::class, 'index'])->name('member.jadwal.index');
 });
 
+Route::get('/muscles', [ExerciseController::class, 'muscles'])->name('muscles.index');
+Route::get('/muscles/{muscle}', [ExerciseController::class, 'byMuscle'])->name('muscles.show');
 
+Route::get('/exercises/create', [ExerciseController::class, 'create'])->name('exercises.create');
+Route::post('/exercises', [ExerciseController::class, 'store'])->name('exercises.store');
 /*
 | ABSENSI QR ROUTE
 */

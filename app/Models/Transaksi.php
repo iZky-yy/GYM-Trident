@@ -15,13 +15,14 @@ class Transaksi extends Model
         'status',
         'validated_by',
         'validated_at',
-        'expired_at'
+        'expired_at',
     ];
 
-    public function pt()
-    {
-        return $this->belongsTo(PersonalTrainer::class, 'personal_trainer_id');
-    }
+    protected $casts = [
+        'validated_at' => 'datetime',
+        'expired_at'   => 'datetime',
+    ];
+
     public function member()
     {
         return $this->belongsTo(User::class, 'member_id');
@@ -30,5 +31,15 @@ class Transaksi extends Model
     public function paket()
     {
         return $this->belongsTo(PaketGym::class, 'paket_id');
+    }
+
+    public function pt()
+    {
+        return $this->belongsTo(PersonalTrainer::class, 'personal_trainer_id');
+    }
+
+    public function validatedBy()
+    {
+        return $this->belongsTo(User::class, 'validated_by');
     }
 }

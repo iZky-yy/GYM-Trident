@@ -713,3 +713,67 @@ select.form-input:focus{
     font-size: 0.85rem;
     font-weight: 600;
 }
+/* GRID */
+.muscle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.muscle-card {
+    position: relative;
+    height: 180px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.muscle-card:hover {
+    transform: scale(1.05);
+}
+
+.muscle-card .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.muscle-card h2 {
+    position: relative;
+    z-index: 2;
+}
+
+/* MODAL */
+#exercise-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+/* BACKGROUND PER OTOT */
+.muscle-card:nth-child(1) {
+    background: url('/images/chest.png') center/cover;
+}
+.muscle-card:nth-child(2) {
+    background: url('/images/back.png') center/cover;
+}
+.muscle-card:nth-child(3) {
+    background: url('/images/legs.png') center/cover;
+}
+.muscle-card:nth-child(4) {
+    background: url('/images/shoulder.png') center/cover;
+}
+.muscle-card:nth-child(5) {
+    background: url('/images/biceps.png') center/cover;
+}
+.muscle-card:nth-child(6) {
+    background: url('/images/triceps.png') center/cover;
+}

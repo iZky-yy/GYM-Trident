@@ -3,119 +3,135 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Membership;
+use App\Models\PaketGym;
 use App\Models\User;
 use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
     public function index()
     {
-        $member = User::where('role', 'member')->latest()->get();
+        $members = User::where('role', 'member')->latest()->get();
 
-        return view('admin.member.index', compact('member'));
+        return view('admin.member.index', compact('members'));
     }
 
     public function create()
     {
-        return view('admin.member.create');
-    }
+        $pakets = PaketGym::all();
 
+        return view('admin.member.create', compact('pakets'));
+    }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'address' => 'required',
-            'birthday' => 'required',
-            'phone' => 'required',
+            'address'  => 'required|string',
+            'birthday' => 'required|date',
+            'phone'    => 'required|string|max:20',
+            'paket_id' => 'required|exists:paket_gyms,id',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'address' => $request->address,
-            'birthday' => $request->birthday,
-            'phone' => $request->phone,
-            'qr_token' => Str::uuid(),
-            'role' => 'member'
-        ]);
+        try {
+            DB::transaction(function () use ($request) {
+                $user = User::create([
+                    'name'     => $request->name,
+                    'email'    => $request->email,
+                    'password' => Hash::make($request->password),
+                    'address'  => $request->address,
+                    'birthday' => $request->birthday,
+                    'phone'    => $request->phone,
+                    'role'     => 'member',
+                ]);
 
-        $qrName = 'user_'.$user->id.'.png';
+                Membership::create([
+                    'member_id'    => $user->id,
+                    'paket_id'     => $request->paket_id,
+                    'tanggal_mulai'=> now(),
+                    'status'       => 'active',
+                ]);
 
-        $qr = new QrCode($user->qr_token);
-
-        $writer = new PngWriter();
-        $result = $writer->write($qr);
-
-        Storage::disk('public')->put(
-            'qrcodes/'.$qrName,
-            $result->getString()
-        );
-
-        $user->update([
-            'qr_code' => 'qrcodes/'.$qrName
-        ]);
+                $this->generateAndSaveQrCode($user);
+            });
+        } catch (\Exception $e) {
+            return back()
+                ->withInput()
+                ->with('error', 'Gagal menambahkan member: ' . $e->getMessage());
+        }
 
         return redirect()->route('member.index')
-                         ->with('success', 'Member berhasil ditambahkan');
+            ->with('success', 'Member berhasil ditambahkan');
     }
 
     public function show(string $id)
     {
         $member = User::where('role', 'member')->findOrFail($id);
-        return view('member.show', compact('member'));
+
+        return view('admin.member.show', compact('member'));
     }
 
     public function edit(string $id)
     {
         $member = User::where('role', 'member')->findOrFail($id);
+
         return view('admin.member.edit', compact('member'));
     }
 
     public function update(Request $request, string $id)
     {
         $member = User::where('role', 'member')->findOrFail($id);
+
         $request->validate([
-            'name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:users,email,' . $member->id,
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email,' . $member->id,
+            'address'  => 'required|string',
+            'birthday' => 'required|date',
+            'phone'    => 'required|string|max:20',
             'password' => 'nullable|min:6',
-            'address' => 'nullable',
-            'birthday' => 'nullable',
-            'phone' => 'nullable',
         ]);
 
-        $member->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'address' => $request->address,
-            'birthday' => $request->birthday,
-            'phone' => $request->phone,
-        ]);
-        if ($request->password) {
-            $member->update([
-                'password' => Hash::make($request->password)
-            ]);
+        $data = $request->only(['name', 'email', 'address', 'birthday', 'phone']);
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
         }
 
+        $member->update($data);
+
         return redirect()->route('member.index')
-                         ->with('success', 'Member berhasil diupdate');
+            ->with('success', 'Member berhasil diupdate');
     }
 
     public function destroy(string $id)
     {
         $member = User::where('role', 'member')->findOrFail($id);
+
+        if ($member->qr_code && Storage::disk('public')->exists($member->qr_code)) {
+            Storage::disk('public')->delete($member->qr_code);
+        }
+
         $member->delete();
+
         return back()->with('success', 'Member berhasil dihapus');
+    }
+
+    private function generateAndSaveQrCode(User $user): void
+    {
+        $qrName = 'user_' . $user->id . '.png';
+        $writer = new PngWriter();
+        $result = $writer->write(new QrCode($user->qr_token));
+
+        Storage::disk('public')->put('qrcodes/' . $qrName, $result->getString());
+
+        $user->update(['qr_code' => 'qrcodes/' . $qrName]);
     }
 }

@@ -777,3 +777,71 @@ select.form-input:focus{
 .muscle-card:nth-child(6) {
     background: url('/images/triceps.png') center/cover;
 }
+
+div.dataTables_wrapper {
+    color: white;
+}
+
+div.dataTables_filter input {
+    background: #111;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+div.dataTables_filter input:focus {
+    outline: none;
+    border-color: #A3FF12;
+}
+
+div.dataTables_filter label {
+    color: #888;
+}
+
+div.dataTables_length select {
+    background: #111;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+div.dataTables_length label {
+    color: #888;
+}
+
+div.dataTables_info {
+    color: #888;
+    font-size: 13px;
+}
+
+div.dataTables_paginate .paginate_button {
+    color: #888 !important;
+    background: #1a1a1a;
+    border: none !important;
+    border-radius: 6px;
+    margin: 0 2px;
+}
+
+div.dataTables_paginate .paginate_button:hover {
+    background: #333 !important;
+    color: white !important;
+}
+
+div.dataTables_paginate .paginate_button.current {
+    background: #A3FF12 !important;
+    color: black !important;
+    border: none !important;
+}
+
+table.dataTable thead th {
+    border-bottom: 1px solid #333 !important;
+    color: #888;
+}
+
+table.dataTable thead .sorting::after,
+table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::after {
+    color: #A3FF12;
+}

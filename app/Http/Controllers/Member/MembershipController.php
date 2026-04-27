@@ -54,7 +54,8 @@ class MembershipController extends Controller
 
     public function edit($id)
     {
-        $membership = Membership::findOrFail($id);
+        $membership = Membership::where('member_id', auth()->id())
+        ->findOrFail($id);
         $pakets = PaketGym::all();
         $pts = PersonalTrainer::with('user')->get();
 
@@ -63,8 +64,8 @@ class MembershipController extends Controller
 
     public function update(Request $request, $id)
     {
-        $membership = Membership::findOrFail($id);
-
+        $membership = Membership::where('member_id', auth()->id())
+        ->findOrFail($id);
         $membership->update([
             'paket_id' => $request->paket_id,
             'personal_trainer_id' => $request->personal_trainer_id,
@@ -77,7 +78,9 @@ class MembershipController extends Controller
 
     public function destroy($id)
     {
-        Membership::findOrFail($id)->delete();
+        Membership::where('member_id', auth()->id())
+        ->findOrFail($id)
+        ->delete();
 
         return back()->with('success','Membership dihapus');
     }

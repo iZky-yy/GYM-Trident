@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('exercise_id')->constrained()->cascadeOnDelete();
             $table->enum('type', ['video', 'image']);
-            $table->string('url'); // youtube_id atau link gambar
+            $table->string('url');
             $table->timestamps();
         });
     }

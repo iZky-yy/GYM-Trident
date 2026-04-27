@@ -10,8 +10,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $memberships = Membership::All();
-
+       $memberships = Membership::with([
+            'paket',
+            'pt.user'
+        ])
+        ->where('member_id', auth()->id())
+        ->latest()
+        ->get();
 
         return view('member.dashboard', compact(
             'memberships'

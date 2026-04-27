@@ -61,7 +61,8 @@ class TransaksisController extends Controller
 
     public function show($id)
     {
-        $transaksi = Transaksi::findOrFail($id);
+        $transaksi = Transaksi::where('member_id', auth()->id())
+            ->findOrFail($id);
 
         return view('member.transaksis.show', compact('transaksi'));
     }
@@ -72,7 +73,8 @@ class TransaksisController extends Controller
             'bukti' => 'required|image|max:2048'
         ]);
 
-        $transaksi = Transaksi::findOrFail($id);
+        $transaksi = Transaksi::where('member_id', auth()->id())
+            ->findOrFail($id);
 
         if ($transaksi->expired_at < now()) {
             return back()->with('error', 'Transaksi sudah expired');

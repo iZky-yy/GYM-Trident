@@ -11,8 +11,6 @@ Tambah Exercise
 
         <form action="{{ route('exercises.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
-            <!-- NAMA -->
             <div class="form-group">
                 <label>Nama Latihan</label>
                 <input type="text" name="name" class="form-input" value="{{ old('name') }}">
@@ -20,8 +18,6 @@ Tambah Exercise
                     <div class="form-error">{{ $message }}</div>
                 @enderror
             </div>
-
-            <!-- OTOT -->
             <div class="form-group">
                 <label>Target Otot</label>
                 <select name="muscle_group" class="form-input">
@@ -37,44 +33,29 @@ Tambah Exercise
                     <div class="form-error">{{ $message }}</div>
                 @enderror
             </div>
-
-            <!-- DESKRIPSI -->
             <div class="form-group">
                 <label>Deskripsi</label>
                 <textarea name="description" class="form-input" rows="3">{{ old('description') }}</textarea>
             </div>
-
-            <!-- YOUTUBE -->
             <div class="form-group">
                 <label>Link YouTube</label>
                 <input type="text" id="youtube" name="youtube" class="form-input"
                        placeholder="https://youtube.com/watch?v=..." value="{{ old('youtube') }}">
             </div>
-
-            <!-- PREVIEW VIDEO -->
             <div id="youtube-preview" style="margin-top:15px;"></div>
-
-            <!-- GAMBAR -->
             <div class="form-group">
                 <label>Gambar Latihan</label>
                 <input type="file" name="image" id="image" class="form-input">
             </div>
-
-            <!-- PREVIEW GAMBAR -->
             <div style="margin-top:15px;">
                 <img id="image-preview" style="width:100%; border-radius:10px; display:none;">
             </div>
-
-            <!-- SUBMIT -->
             <button type="submit">Simpan Exercise</button>
         </form>
     </div>
 </div>
 
 <script>
-// ==================
-// PREVIEW YOUTUBE
-// ==================
 const youtubeInput = document.getElementById("youtube");
 const preview = document.getElementById("youtube-preview");
 

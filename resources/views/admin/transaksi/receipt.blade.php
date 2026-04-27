@@ -1,4 +1,4 @@
-@extends('layouts.member')
+@extends('layouts.admin')
 
 @section('title')
     Struk Transaksi

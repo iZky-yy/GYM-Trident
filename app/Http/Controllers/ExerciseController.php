@@ -23,7 +23,6 @@ class ExerciseController extends Controller
         return view('exercises.muscles', compact('muscles'));
     }
 
-    // 🔹 LIST EXERCISE PER OTOT
     public function byMuscle($muscle)
     {
         $exercises = Exercise::with('media')
@@ -33,13 +32,11 @@ class ExerciseController extends Controller
         return view('exercises.index', compact('exercises', 'muscle'));
     }
 
-    // 🔹 FORM TAMBAH
     public function create()
     {
         return view('exercises.create');
     }
 
-    // 🔹 SIMPAN DATA
     public function store(Request $request)
     {
         $request->validate([
@@ -68,7 +65,6 @@ class ExerciseController extends Controller
             ]);
         }
 
-        // GAMBAR
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('exercises', 'public');
 

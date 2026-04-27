@@ -5,15 +5,28 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Transaksi;
 use App\Models\Membership;
+use App\Models\PaketGym;
+
 
 class TransaksiController extends Controller
 {
+    public function receipt($id)
+    {
+        $transaksi = Transaksi::with(['paket', 'pt', 'pt.user'])
+        ->findOrFail($id);
+
+        if ($transaksi->status !== 'approved') {
+            return redirect()->back();
+        }
+
+        return view('admin.transaksi.receipt', compact('transaksi'));;
+    }
+
     public function index()
     {
-        $transaksi = Transaksi::with('member','paket')
-            ->latest()
-            ->get();
-
+        $transaksi = Transaksi::with(['paket', 'pt.user', 'member'])
+        ->latest()
+        ->get();
         return view('admin.transaksi.index', compact('transaksi'));
     }
 
@@ -31,7 +44,6 @@ class TransaksiController extends Controller
             'validated_at' => now()
         ]);
 
-        // BUAT MEMBERSHIP
         Membership::create([
             'member_id' => $transaksi->member_id,
             'paket_id' => $transaksi->paket_id,
@@ -55,5 +67,19 @@ class TransaksiController extends Controller
         ]);
 
         return back()->with('success', 'Transaksi ditolak');
+    }
+
+    private function createMembership($transaksi)
+    {
+        $paket = PaketGym::findOrFail($transaksi->paket_id);
+
+        Membership::create([
+            'member_id' => $transaksi->member_id,
+            'paket_id' => $transaksi->paket_id,
+            'personal_trainer_id' => $transaksi->personal_trainer_id,
+            'tanggal_mulai' => now(),
+            'tanggal_akhir' => now()->addDays($paket->durasi_hari),
+            'status' => 'active'
+        ]);
     }
 }

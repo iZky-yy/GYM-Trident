@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Membership;
 use App\Models\PaketGym;
 use App\Models\User;
+use App\Models\Transaksi;
+use Carbon\Carbon;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Http\Request;
@@ -53,11 +55,26 @@ class MemberController extends Controller
                     'role'     => 'member',
                 ]);
 
+                $pakets = PaketGym::findOrFail($request->paket_id);
+
+                $transaksi = Transaksi::create([
+                    'member_id' => $user->id,
+                    'paket_id' => $pakets->id,
+                    'personal_trainer_id' => null,
+                    'total_bayar' => $pakets->harga,
+                    'status' => 'approved',
+                    'validated_by' => auth()->id(),
+                    'validated_at' => now(),
+                    'expired_at' => now()->addDay(),
+                ]);
+
                 Membership::create([
-                    'member_id'    => $user->id,
-                    'paket_id'     => $request->paket_id,
-                    'tanggal_mulai'=> now(),
-                    'status'       => 'active',
+                    'member_id' => $user->id,
+                    'paket_id' => $pakets->id,
+                    'personal_trainer_id' => null,
+                    'tanggal_mulai' => now(),
+                    'tanggal_akhir' => now()->addDays($pakets->durasi_hari),
+                    'status' => 'active',
                 ]);
 
                 $this->generateAndSaveQrCode($user);

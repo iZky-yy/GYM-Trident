@@ -82,6 +82,7 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
         ->name('admin.transaksi');
     Route::post('transaksi/{id}/approve', [TransaksiController::class, 'approve'])->name('admin.transaksi.approve');
     Route::post('transaksi/{id}/reject', [TransaksiController::class, 'reject'])->name('admin.transaksi.reject');
+    Route::get('transaksi/{id}/receipt', [TransaksiController::class, 'receipt'])->name('admin.transaksi.receipt');
     Route::get('/rekap', [RekapController::class,'index'])
         ->name('admin.rekap');
     Route::get('/membership', [MembershipsController::class,'index'])

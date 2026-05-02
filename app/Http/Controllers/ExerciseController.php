@@ -8,16 +8,15 @@ use App\Models\ExerciseMedia;
 
 class ExerciseController extends Controller
 {
-    // 🔹 HALAMAN CATEGORY (CHEST, BACK, DLL)
     public function muscles()
     {
         $muscles = [
-            ['name' => 'chest', 'image' => 'chest.jpg'],
-            ['name' => 'back', 'image' => 'back.jpg'],
-            ['name' => 'legs', 'image' => 'legs.jpg'],
-            ['name' => 'shoulder', 'image' => 'shoulder.jpg'],
-            ['name' => 'biceps', 'image' => 'biceps.jpg'],
-            ['name' => 'triceps', 'image' => 'triceps.jpg'],
+            ['name' => 'chest', 'image' => 'chest.png'],
+            ['name' => 'back', 'image' => 'back.png'],
+            ['name' => 'legs', 'image' => 'legs.png'],
+            ['name' => 'shoulder', 'image' => 'shoulder.png'],
+            ['name' => 'biceps', 'image' => 'biceps.png'],
+            ['name' => 'triceps', 'image' => 'triceps.png'],
         ];
 
         return view('exercises.muscles', compact('muscles'));
@@ -34,7 +33,7 @@ class ExerciseController extends Controller
 
     public function create()
     {
-        return view('exercises.create');
+        return view('admin.exercises.create');
     }
 
     public function store(Request $request)

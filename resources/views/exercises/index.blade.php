@@ -11,11 +11,8 @@
                 <h2>{{ ucfirst($muscle) }} Workout</h2>
                 <input type="text" id="search" class="form-input" placeholder="Search exercise...">
             </div>
-
             <div id="exercise-list" class="stats-container"></div>
         </div>
-
-        <!-- MODAL -->
         <div id="exercise-modal" style="display:none;">
             <div class="form-container">
                 <h2 id="modal-title"></h2>
@@ -25,7 +22,6 @@
             </div>
         </div>
     </div>
-
     <script>
         const EXERCISES = @json($exercises);
 

@@ -10,11 +10,15 @@
             <div class="table-title">
                 <h2>Workout Categories</h2>
             </div>
-
+            @if (auth()->user()->role === 'admin')
+                <a href="{{ route('exercises.create') }}" class="btn-submit">
+                    + Tambah Exercise
+                </a>
+            @endif
             <div class="muscle-grid">
                 @foreach ($muscles as $m)
                     <a href="{{ route('muscles.show', $m['name']) }}" class="muscle-card"
-                        style="background:url('/images/{{ $m['image'] }}') center/cover">
+                        style="background-image: url('{{ asset('images/' . $m['image']) }}');">
 
                         <div class="overlay"></div>
                         <h2>{{ ucfirst($m['name']) }} Workout</h2>

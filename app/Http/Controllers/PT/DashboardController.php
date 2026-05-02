@@ -3,12 +3,22 @@
 namespace App\Http\Controllers\PT;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Membership;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('pt.dashboard');
+        $pt = Auth::user()->personalTrainer;
+        $memberships = Membership::with(['member', 'paket'])
+            ->where('personal_trainer_id', $pt->id)
+            ->latest()
+            ->get();
+        $totalAssignedMembers = $memberships->unique('member_id')->count();
+        $activeMembersCount = $memberships->where('status', 'active')->unique('member_id')->count();
+        $revenue = $activeMembersCount * $pt->tarif_per_sesi;
+
+        return view('pt.dashboard', compact('memberships', 'totalAssignedMembers', 'revenue'));
     }
 }

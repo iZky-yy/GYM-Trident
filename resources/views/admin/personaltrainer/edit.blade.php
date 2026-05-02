@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label>Email</label>
                     <input type="email" id="email" name="email" placeholder="Ex : example@gmail.com" class="form-input"
-                        value="{{ $pts->email }}">
+                        value="{{ $pts->user->email }}">
                     <div class="form-error">
                         @error('email')
                             {{ $message }}
